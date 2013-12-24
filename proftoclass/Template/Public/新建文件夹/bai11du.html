@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset>
+<{foreach $maps as $vo}>
+<url>
+<loc><{$vo.url}></loc>
+<lastmod><{$vo.time|date_format:"%Y-%m-%d"}></lastmod>
+<changefreq>always</changefreq>
+<priority>1.0</priority>
+</url>
+<{/foreach}>
+</urlset>

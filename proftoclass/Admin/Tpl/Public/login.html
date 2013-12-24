@@ -1,0 +1,52 @@
+<div class="dologin">
+    <{if $user==''}>
+    <div class="login_top">
+        <form action="__APP__/Login" method="POST" id="dologin" onsubmit="return login();"/>
+        <div class="doinput">
+            <i class="d_yh"></i><input type="text" id="l_username" style="color: #ccc;" onclick="this.value=''"  onblur="this.value=this.value" name="username" value="请输入管理员账号"/>
+        </div>
+
+        <div class="doinput">
+            <i class="d_pass"></i><input type="password" id="l_password" style="color: #ccc" name="password" value="请输入密码" onclick="this.value=''"  onblur="this.value=this.value">
+        </div>
+
+        <div class="doinput" style="border:0;">
+
+            <button id="loginbtn" style="margin-left: 110px;*+margin-left: 24px;" type="submit"><u>登录</u></button>
+            
+        </div>
+
+        </form>
+    </br>
+    <div class="login_right">   
+    <label></label>   
+      <a class="login_link" style="margin-left: 200px;*+margin-left: 24px;" href="__ROOT__/index.php" target="_blank" id="go">访问官方网站</a>   
+    </div>
+
+    </div>
+
+<!--    <div class="login_con">
+        <img src="__PUBLIC__/Home/images/demo.jpg"/>
+    </div>
+-->
+
+    <!--<div class="login_res">
+        <a href="javascript:void(0)" class="tbox"><img src="__PUBLIC__/Home/images/res.jpg"/></a>
+    </div>-->
+    <{else}>
+    <div class='login' id='indexLogin'>
+        <div class='cont'>
+            <div class='inner clr'>
+
+                <a href='#' title='<{$info.name}>'><img alt='<{$user.name}>' src='__ROOT__<{$user.pic}>' width='48' height='48'></a>
+                <p>
+
+                    <a href='#' title='<{$user.username}>' style="display: block;width: 200px"><{$user.username}></a>
+
+                    <span>欢迎登录本系统！&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='__APP__?m=Login&a=loginout'>退出登录</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <{/if}>
+</div>

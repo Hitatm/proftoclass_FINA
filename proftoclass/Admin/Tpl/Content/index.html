@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看内容 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function content(mode, args){
+	switch (mode){
+		case 'delete':
+		case 'fixed_1':
+		case 'fixed_0':
+			args = args || $$.selectval('#table_list :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择记录。'});
+				return false;
+			}
+			if (mode == 'delete'){
+				$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+					$$.get('./admin.php?m=Content&a=delete&id=' + args, function(){$$.redirect();});
+				}});	
+			}else{
+				$$.get('__APP__?m=Content&a=update&id=' + args +"&type="+mode, function(){$$.redirect();});
+			}
+			break;
+
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+$(function(){
+	$('.table_list tr').hover(function(){
+		$(this).find('.operate').show();	
+	},function(){
+		$(this).find('.operate').hide();
+	});
+});
+</script>
+</head>
+<body>
+<form method="get" action="__APP__" >
+<input type="hidden" name="m" value="Content">
+<input type="hidden" name="a" value="index">
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th>
+		<select class="bnt"><option value="">批量操作</option>
+            <option value="delete">删除</option>
+            <option value="fixed_1">置顶</option>
+            <option value="fixed_0">取消置顶</option>
+        </select>
+        <input type="button" value="应用" class="button" onclick="content($(this).parent().find('.bnt').val());" />
+		<select name="type">
+        	<option value="">--栏目类别--</option>
+        	<volist name="list1" id="v">
+				<option value="<{$v.id}>"><if condition="$v.pid gt 0">&nbsp;&nbsp;</if><{$v.title}></option>
+			</volist>
+        </select>
+        <input type="text" class="text" name="keyw" id="search_key" size="20" value="<{$Think.get.keyw}>" />
+        <input type="submit" value="筛选" class="button" />
+		<input type="button" value="重置" class="button" />
+		</th>
+		<td align="right" class="simple"></td>
+	</tr>
+</table>
+</form>
+
+<table id="table_list" class="table_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th>标题</th>
+		<th>标签</th>
+		<th width="21%">所属分类</th>
+		<th width="21%">状态</th>
+		<th width="17%">添加时间</th>
+		
+	</tr>	
+    <volist name="list" id="vo" empty="$empty">
+	<tr>
+		<td><input type="checkbox" class="checkbox" name="select" id="select_<{$vo.id}>" value="<{$vo.id}>" onchange="var _this = $(this); _this.prop('checked') ? _this.parent().parent().addClass('S') : _this.parent().parent().removeClass('S');" /></td>
+		<td><{$vo.id}></td>
+		<td>
+			<a class="update" href=""><{$vo.title}></a>
+			<div class="operate">
+				<a class="update" href="./admin.php?m=content&a=edit&id=<{$vo.id}>">修改</a><span>|</span>
+				<a class="delete" href="javascript:void(0);" onclick="content('delete','<{$vo.id}>');">删除</a>
+			</div>
+		</td>
+			<td><{$vo.tags}></td>
+			<td><{$vo.cid}></td>
+			<td><if condition="$vo.state eq 0" >未审核<elseif condition='$vo.state gt 2' />已审核<elseif condition='$vo.state lt -100' />回收站</if></td>
+			<td><{$vo.addtime}></td>
+	</tr>
+	</volist>
+
+</table>
+
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="right">
+			<div class="turnner" id="turnner">
+			  <{$page}>
+			</div>
+		
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

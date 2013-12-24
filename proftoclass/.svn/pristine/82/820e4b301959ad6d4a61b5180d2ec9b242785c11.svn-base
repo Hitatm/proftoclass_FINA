@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看标签 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css">
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/tools/excolor/jquery.modcoder.excolor.js"></script>
+
+<script type="text/javascript">
+function content(mode, args){
+	switch (mode){
+		case 'tags.delete':
+			args = args || $$.selectval('#form_tags :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择记录。'});
+				return false;
+			}
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+				$$.get('./admin.php?m=Tags&a=delete&id=' + args, function(){$$.redirect();});
+			}});
+			break;
+		case 'tags.update':
+			$$.post('./admin.php?m=Tags&a=update', $('#form_tags').serialize());
+			break;
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+
+function liOver(){
+	$('.tags_select li').hover(function(){
+		$(this).addClass('c');
+	},function(){
+		$(this).removeClass('c');		
+	});	
+}
+
+$(function(){
+	liOver();
+	$('.color').modcoder_excolor();
+});
+</script>
+</head>
+<body>
+	<form id="form_tags">
+	<div class="tags_select">
+		<script type="text/javascript">
+		function itemActive(index){
+			$('#tg_id_'+index).attr('name', 'tg_id[]');
+			$('#tg_title_'+index).attr('name', 'tg_title[]');
+			$('#tg_color_'+index).attr('name', 'tg_color[]');
+			$('#item_'+index).addClass('a');
+		}
+		</script>
+    	<ul>
+        <!--开始遍历-->
+		<{foreach $list as $vo}>
+        	<li id="item_">		
+            <input type="hidden" value="" id="tg_id_" />
+            <input type="text" class="text" value="<{$vo.title}>" id="tg_title_" onfocus="itemActive(3);" />
+            <input type="text" class="text color"  value="<{$vo.color}>" style="float:left; width:50px;" id="tg_color_" onfocus="itemActive(3);" />
+            <span style="float:right; margin:5px 10px 0 0;">
+			<input type="checkbox" class="checkbox" name="select" value="" />
+			</span>
+			</li>
+		<{/foreach}>
+		<!--//开始遍历-->
+							
+        	<li style="cursor:pointer; line-height:25px; padding:10px 0; text-align:center;">
+            	<a href="" onclick="content('tags.update'); return false;">保存修改</a><br />
+            	<a href="" onclick="content('tags.delete'); return false;">批量删除</a>
+            </li>
+        </ul>
+    </div>
+	</form>
+</body>
+</html>

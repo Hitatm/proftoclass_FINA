@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模块管理 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function modules(mode, args){
+	switch (mode){
+		case 'module.off':
+			$$.get('./admin.php?m=Models&a=off&id='+args, function(){
+                top.naviUpdate(); $$.redirect();
+            });
+			break;
+
+        case 'module.on':
+            $$.get('./admin.php?m=Models&a=on&id='+args, function(){
+                top.naviUpdate(); $$.redirect();
+            });
+            break;
+
+
+		case 'module.update':
+			$$.get('?mode=' + mode + '&args=' + args, function(){top.naviUpdate();$$.redirect();});
+			break;
+		case 'module.order':
+			$$.get('?mode=' + mode + '&args=' + args, function(){top.naviUpdate();});
+			break;
+		default:
+			$$.alert({text : '无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+
+function moduleOrder(){
+	var order = '', dot = '';
+	$('#modules dl').each(function(){order+=dot+$(this).attr('module');dot=',';});
+	
+	return order;
+}
+
+$(function(){
+	window.__order_module = moduleOrder();
+	
+	$("#modules").sortable({
+		containment:'parent',
+		axis:'y',
+		start: function(){clearTimeout(window.__sort_timer||0);},
+		stop: function(){
+			var order = moduleOrder();
+			if(window.__order_module != order){
+				window.__sort_timer = setTimeout(function(){modules('module.order', order); window.__order_module = order;}, 1500);
+			};
+		}
+	});
+});
+</script>
+</head>
+<body>
+
+<div class="modules" id="modules">
+	<!--遍历模块-->
+    <{foreach $list as $v}>
+	<dl module="<{$v.name}>">
+		<dt><img src="<{$AdminTpl}>icons/min_<{$v.icons}>.png" /></dt>
+		<dd>
+			<span>
+            <!--模块管理-->
+			<a class="rst" href="javascript:void(0);" onclick="return modules('module.update',<{$v.id}>);">更新</a> &nbsp;
+            <{if $v.state==1}>
+            <a class="ins" href="javascript:void(0);" onclick="return modules('module.on',<{$v.id}>);">启用</a> &nbsp;
+            <{else}>
+			<a class="del" href="javascript:void(0);" style="opacity:0.5; filter:alpha(opacity=50); color:#ccc;" onclick="return modules('module.off',<{$v.id}>);">禁用</a>
+			<{/if}>
+            </span>
+			<strong></strong> &nbsp; <small>for <{$v.banben}></small>
+		</dd>
+		<dd><cite>作者：</cite> <{$v.author}> (513718409@qq.com) &nbsp; <cite>官方：</cite><a href="http://www.jionglaoda.com/" target="_blank">www.jionglaoda.com</a> &nbsp; <cite>更新：<{$v.addtime}></cite></dd>
+		<dd><{$v.desc}></dd>
+	</dl>
+    <{/foreach}>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+
+
+<!--标签 start-->
+<div class="tagsblock" style="float: left;">
+    <h3>标签</h3>
+    <div class="content">
+        <{foreach $tags as $vo}>
+        <{if $vo.title!=''}><p><a href="__ROOT__?m=Index&a=sear&kw=<{$vo.title}>" title="<{$vo.title}>"><span style="color:<{$vo.color}>"><{$vo.title}></span></a></p><{/if}>
+        <{/foreach}>
+    </div>
+</div>
+
+<div class="tagsblock" style="float: left;">
+    <h3>辅导员提示:<{$var}>级小班行计划</h3>
+    <!-- <div class="content"> -->
+         
+<{foreach $shit as $vo}>
+    <{if $vo.times!='0'}>
+      <p> 
+            &nbsp;&nbsp;本学期次数:<{$vo.times}></br>
+            &nbsp;&nbsp;推荐时间  :</br>
+
+            <{if $vo.time1start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第一次：<{$vo.time1start}>-----<{$vo.time1end}>
+            <{/if}></br>
+
+            <{if $vo.time2start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第二次：<{$vo.time2start}>-----<{$vo.time2end}>
+            <{/if}></br>
+
+            <{if $vo.time3start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第三次：<{$vo.time3start}>-----<{$vo.time3end}>
+            <{/if}></br>
+
+            <{if $vo.time4start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第四次：<{$vo.time4start}>-----<{$vo.time4end}>
+            <{/if}></br>  
+
+            其他信息：<{$vo.content}>  
+     </p>
+
+    <{/if}>
+<{/foreach}>
+
+    <!-- </div> -->
+</div>
+<!--标签 end-->
+
+<!--右侧底部 start-->
+<div id="box">
+    <div id="float" class="div1">
+        <div class="toolbar">
+            <a href="#top" class="back">回到顶部</a><a href="javascript:void(0)" class="feedback">意见建议</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>囧老大</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<link href='__PUBLIC__/Home/css/style_web.css' media="screen, projection" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/Home/css/css.css"/>
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+
+<!--导入瀑布流插件开始-->
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.masonry.min.js"></script>
+<!--导入瀑布流插件结束-->
+
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离 
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','height':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'height':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+	var mypage=0;
+		//调用函数第一次打开时页面加载图片
+		demo();
+
+	$(window).bind("scroll",function() {
+        // 然后判断窗口的滚动条是否接近页面底部，这里的20可以自定义
+        if ($(document).scrollTop() + $(window).height() > $(document).height() - 30){
+        //瀑布流JS的开始
+            if(mypage<=$('.aaa').html()){	//定义Ajax请求服务器次数
+                demo();		//打开页面加载一次，显示定义的图片数量
+            }
+        }
+    })
+
+    function demo(){
+        mypage++;
+        //ajax的应用，滚动条向下滚动页面无限刷新
+        $.get("__APP__/pubuliu/fun/pageNum/"+mypage,	//pageNum是无限刷新下一页的内容
+        function(data){
+        $("#main").append(data);
+           var $container = $('#main');
+                $container.imagesLoaded(function(){
+                $container.masonry({
+                itemSelector : '.item'
+                 });
+            });
+        });
+    }
+//瀑布流JS的结束		
+});
+//为标签a下面的评论添加一个点击事件(点击显示和点击隐藏)
+
+	function abc(id){
+        if($('#Form_' + id).attr("rel")=='none'){
+            $('#Form_' + id).attr({ rel: "display" });
+            $('#Form_' + id).show();
+        }else{
+            $('#Form_' + id).attr({ rel: "none" })
+            $('#Form_' + id).hide();
+        }
+        $('#main').masonry({
+            itemSelector : '.item'
+        });
+	}
+	
+	//获取评论的点击事件
+	var $uid = document.getElementById("uid");
+	var $tid = document.getElementById("tid");
+	var $content = document.getElementsByName("content");
+	
+	function func(tid,uid,content){
+		$.get("./index.php?m=Index&a=func&tid="+tid+"&uid="+uid+"&desc="+desc,function(data){
+			alert(data);
+		});
+	}
+	
+	//为标签a下面的喜欢添加一个点击事件	
+	function like(id){
+
+		var aa = "<div id='dd'><object width='115' height='100' class='swfupload' data='__PUBLIC__/Home/flash/like.swf'><param value='transparent' name='wmode'></object></div>";
+		$('#'+id).append(aa);
+		$("#dd").mouseout(function(){
+			$(this).remove();
+		})
+	}
+	
+
+function myup(res,id){
+	//alert(4234);
+	$.ajax({
+		type:"GET",
+		url:"__APP__/Index/doup/up/"+res+"/id/"+id,
+		success:function(msg){
+			alert(msg);
+		}
+	});
+}
+
+
+
+</script>
+</head>
+<body>
+
+<!-- header start-->
+<{include file="../Public/header.html"}>
+<!-- header end-->
+
+<div class="main">
+    <div class="content-block">
+        <div id="page">
+            <div id="main" style="background:none">
+				
+			</div>
+        </div>
+    </div>
+</div>
+ 
+<!-- footer start-->
+<{include file= "../Public/footer.html"}>
+<!-- footer end-->
+
+</body>
+</html>

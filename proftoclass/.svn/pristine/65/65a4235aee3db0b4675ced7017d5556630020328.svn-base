@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看栏目 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function category(mode,args){
+	switch (mode){
+		case 'category.delete':
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+				$$.get('url?mode=' + mode + '&args=' + args, function(){$$.redirect();});
+			}});
+			break;
+		case 'category.order':
+			$$.get('url?mode=' + mode + '&args=' + args);
+			break;
+		default:
+			$$.alert({text:'无效参数 [ '+mode+' ]。'});
+	}
+	
+	return false;
+}
+
+function dlOrder(){
+	var order = '', dot = '';
+	$('dl[id]').each(function(){order+=dot+$(this).attr('id').replace('category_','');dot=',';});
+	
+	return order;
+}
+
+function ddOrder(dl){
+	var selector = dl ? '#category_'+dl+' dd' : 'dd';
+	var order = '', dot = '';
+	$(selector).each(function(){order+=dot+$(this).attr('id').replace('category_','');dot=',';});
+	
+	return order;
+}
+
+$(function(){
+	window.__order_dl = dlOrder();
+	window.__order_dd = ddOrder();
+	
+	$('body').sortable({
+		containment:'window',
+		helper:'clone',
+		items:'dl',
+		axis:'y',
+		start: function(){clearTimeout(window.__sort_dl_timer||0);},
+		stop: function(){
+			var order = dlOrder();
+			if (window.__order_dl != order){
+				window.__sort_dl_timer = setTimeout(function(){category('category.order', order); window.__order_dl = order;}, 1500);
+			}
+		}
+	});
+	
+	$('dl').sortable({
+		containment:'parent',
+		items:'dd',
+		axis:'y',
+		start: function(){clearTimeout(window.__sort_dd_timer||0);},
+		stop: function(){
+			var order = ddOrder();
+			var dl = $(this).attr('id').replace('category_','');
+			if (window.__order_dd != order){
+				window.__sort_dd_timer = setTimeout(function(){category('category.order', ddOrder(dl)); window.__order_dd = order;}, 1500);
+			}
+		}
+	});
+});
+</script>
+</head>
+<body>
+<!--遍历日志-->
+<dl class="category" id="category_">
+	<dt ondblclick="$(this).find('.B a').click();">
+		<span class="A"># 1</span>
+		<span class="B"><a href="javascript:void(0);" onclick="$('#category_ dd').toggle();$(this).toggleClass('d');">子栏目</a></span>
+		<span class="C"><cite class="type">['栏目' : '链接']</cite></span>
+		<span class="D"></span>
+		<span class="E">
+		<a class="update" href="">修改</a> &nbsp; 
+		<a class="delete" href="javascript:void(0);" onclick="category('category.delete','');">删除</a>
+		</span>
+	</dt>
+</dl>
+	<!--没添加栏目-->
+	<dl class="category">
+		<dt><span>还没有添加栏目。&nbsp;&nbsp;<a href="#" onclick="top.naviSwitcher('content/category.select', 'content/category.insert');return false;">立即添加</a></span></dt>
+	</dl>
+</body>
+</html>

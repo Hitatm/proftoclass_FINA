@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>生成静态 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function settings(mode){
+	switch (mode){
+		case 'index':
+			$$.post('./index.php?m=Create&a='+mode);
+			break;
+		case 'dolist':
+			$$.redirect('./index.php?m=Create&a='+mode+);
+			break;
+        default:
+			$$.alert({text : '无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+</script>
+</head>
+<body>
+
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+
+    <tr>
+        <td>生成栏目列表
+            &nbsp;&nbsp;<select name="content" style="width: 150px">
+				<option value="all">全部分类</option>
+				<{foreach $list as $vo}>
+					<option value="<{$vo.id}>"><{$vo.title}></option>
+				<{/foreach}>
+            </select>
+        </td>
+        <th style="width: 200px"><input type="button" class="button" value="开始生成" onclick="settings('dolist')"/><input type="button" class="button" value="继续生成" onclick="" /></th>
+    </tr>
+	
+	<tr>
+        <td>生成内容列表
+            &nbsp;&nbsp;<select name="content" style="width: 150px">
+				<option value="all">全部内容</option>
+				<{foreach $list as $vo}>
+					<option value="<{$vo.id}>"><{$vo.title}></option>
+				<{/foreach}>
+            </select>
+        </td>
+        <th style="width: 200px"><input type="button" class="button" value="开始生成" /><input type="button" class="button" value="继续生成" onclick="" /></th>
+    </tr>
+
+    <tr>
+        <td>其他内容生成
+            &nbsp;&nbsp;<select name="" style="width: 150px">
+				<option value="all">全部生成</option>
+                <option value="map">网站地图</option>
+                <option value="RSS">RSS订阅</option>
+            </select>
+        </td>
+        <th style="width: 200px"><input type="button" class="button" value="开始生成" /><input type="button" class="button" value="继续生成" onclick="" /></th>
+    </tr>
+	<tr class="action"><td>&nbsp;</td><th><input type="button" class="button" onclick="window.location='./index.php?m=Create&a=index'" value="生成首页" /><input type="button" class="button" value="生成全站" onclick="" /></th></tr>
+</table>
+</body>
+</html>

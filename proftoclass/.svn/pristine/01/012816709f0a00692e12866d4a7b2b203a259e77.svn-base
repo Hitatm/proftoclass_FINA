@@ -1,0 +1,27 @@
+<?php
+class ConfigAction extends BaseAction{
+	//读取配置信息
+    public function index(){
+        $config = require './Public/Conf/config.php';
+        $this->assign($config);
+		$this->display();
+    }
+    // 置信息保存
+    public function configsave(){
+        $config = $_POST["config"];
+
+        //动态模式则删除首页静态文件
+        if($config['url_html']==0){
+            @unlink('./index'.C('html_file_suffix'));
+        }
+
+        $config_old = require './Public/Conf/config.php';
+        $config_new = array_merge($config_old,$config);
+        //写入配置文件
+        arr2file('./Public/Conf/config.php',$config_new);
+
+        //@unlink('');要删除缓存文件
+
+        echo "YES";
+    }
+}

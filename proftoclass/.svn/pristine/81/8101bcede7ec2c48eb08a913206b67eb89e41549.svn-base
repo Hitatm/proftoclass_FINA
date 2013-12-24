@@ -1,0 +1,6 @@
+<?php
+class UploadAction extends BaseAction{
+	public function index(){
+        echo json_encode($this->dofile('user'));
+	}
+}

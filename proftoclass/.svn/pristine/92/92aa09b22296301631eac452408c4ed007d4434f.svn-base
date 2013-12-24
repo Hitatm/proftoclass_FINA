@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>页面路径 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function settings(mode){
+    switch (mode){
+        case 'Config':
+            $$.post('./admin.php?m='+mode+'&a=configsave', $('#form_detail').serialize(),function(){
+                $$.redirect('./admin.php?m=Pages');
+            });
+            break;
+        default:
+            $$.alert({text : '无效参数 [ '+mode+' ]。'});
+            break;
+    }
+	
+	return false;
+}
+</script>
+</head>
+<body>
+
+<form id="form_detail" name="form_detail" method="post" action="###" onsubmit="return settings('Config');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>网站运行模式</th>
+		<td>
+            <select name="config[url_html]">
+                <option value="0" <{if $url_html == 0 }> selected <{/if}>>动态模式</option>
+                <option value="1" <{if $url_html == 1 }> selected <{/if}>>静态模式</option>
+                <option value="2" <{if $url_html == 2 }> selected <{/if}>>URL重写</option>
+            </select>
+        </td>
+	</tr>
+	<tr>
+		<th>网站栏目静态</th>
+		<td>
+            <select name="config[html_list_start]">
+                <option value="0" <{if $html_list_start == 0 }>selected <{/if}>>动态模式</option>
+                <option value="1" <{if $html_list_start == 1 }>selected <{/if}>>生成静态</option>
+            </select>
+        </td>
+	</tr>
+
+    <tr>
+        <th>网站内容静态</th>
+        <td>
+            <select name="config[html_new_start]">
+                <option value="0" <{if $html_new_start == 0 }> selected <{/if}>>动态模式</option>
+                <option value="1" <{if $html_new_start == 1 }> selected <{/if}>>生成静态</option>
+            </select>
+        </td>
+    </tr>
+
+	<tr>
+		<th>栏目生成路径</th>
+		<td>
+            <input type="text" value="<{$html_list_url}>" class="text" name="config[html_list_url]" />
+		</td>
+	</tr>
+
+    <tr>
+		<th>内容生成路径</th>
+		<td>
+            <input type="text" value="<{$html_new_url}>" class="text" name="config[html_new_url]" />
+		</td>
+	</tr>
+    <tr>
+		<th>生成间隔时间</th>
+		<td>
+            <input type="text" value="<{$html_cahce_time}>" class="text" name="config[html_cahce_time]" style="width: 50px" />
+		</td>
+	</tr>
+    <tr>
+		<th>每次生成页数</th>
+		<td>
+            <input type="text" value="<{$html_cahce_page}>" class="text" name="config[html_cahce_page]" style="width: 50px" />
+		</td>
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="保存更改" /><input type="button" class="button cancle" value="放弃更改" onclick="$$.confirm({text:'放弃添加并关闭窗口？', ok:function(){top.naviShut('system/site');}, icon:'WAR'});" /></td></tr>
+</table>
+</form>
+</body>
+</html>

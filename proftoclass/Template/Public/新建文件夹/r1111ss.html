@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+<title><{$sitename}></title>
+<description><{$sitename}></description>
+<link><{$siteurl}></link>
+<language>zh-cn</language> 
+<docs><{$sitename}></docs>
+<generator>Rss Powered By <{$siteurl}></generator>
+<image>
+<url><{$siteurl}>Public/images/logo.gif</url>
+</image>
+
+<{foreach $maps as $vo}>
+<item>
+<title><{$vo.title}></title>
+<link><{$vo.url}></link>
+<author><{$vo.author}></author>
+<pubDate><{$vo.addtime|date_format:"%Y-%m-%d"}></pubDate>
+<description><![CDATA["<{$vo.desc}>"]]></description>
+</item>
+<{/foreach}>
+</channel>
+</rss>

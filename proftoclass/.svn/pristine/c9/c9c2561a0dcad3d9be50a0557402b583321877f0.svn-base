@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>囧老大</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<link rel="stylesheet" href='__PUBLIC__/Home/css/style_web.css' type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离 
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','top':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'top':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+	
+});
+//执行登陆
+function login(){
+
+	$.post('__APP__/Login/dologin/',$('#dologin').serialize(),function(data){
+
+			$(".dologin").html(data);
+		}
+	);
+	
+	return false;
+}
+
+function myup(res,id){
+	//alert(4234);
+	$.ajax({
+		type:"GET",
+		url:"__APP__/Index/doup/up/"+res+"/id/"+id,
+		success:function(msg){
+			document.getElementById(res).innerHTML=msg;
+		}
+	});
+}
+
+function comments(id){
+	$("#comments_"+id).toggle(500);
+}
+
+
+
+</script>
+<style>
+	.discuss{
+	z-index: 3;
+background: #fff;
+color: #707070;
+overflow: hidden;
+border: 1px solid #e9e9e9;
+height: 75px;
+width: 463px;
+padding: 5px 30px 5px 5px;
+resize: none;
+display:none;
+margin-top: 10px;
+border-radius: 6px;
+		}
+		
+	.sx_enter {
+position: absolute;
+right: 25px;
+border: 0;
+z-index: 44;
+margin-top:60px;
+text-indent: -999999em;
+width: 35px;
+height: 28px;
+background: url("./public/Home/css/img/icon_01.png") -27px -295px;
+
+.block{
+	background: url('./public/Home/images/feed-bg-sprites.$5106.png') -1200px 0 repeat-y;
+padding: 18px 20px;
+width: 513px;
+}
+
+.postsuccess {
+line-height: 180%;
+min-height: 300px;
+}
+</style>
+</head>
+<body>
+<{include file= "../Public/header.html"}>
+<!--网站主体 start-->
+<div class="main">
+<div class="content-block">
+<div class="col1">
+    <!--遍历首页文章 start-->
+	<div class="block">
+		<div class="postsuccess">
+			<h2>非常感谢您的分享!</h2>
+		<p>您刚刚提交的糗事将在管理员审核通过之后发表。</p>
+		<p>作为回报，本站已将您的人品 +1，接下来的日子，您将生活的更加幸福快乐。</p>
+	</div>
+		<script type="text/javascript"> if(window.localStorage)window.localStorage.removeItem('article');</script>
+	</div>
+	<div class="shadow"></div>
+    <!--遍历首页文章 end-->
+</div>
+<div class="col2">
+<!--登陆 start-->
+<div class="dologin">
+    <{if $info==''}>
+     <div class="login_top">
+		<form action="#" method="POST" id="dologin" onsubmit="return login();"/>
+        <div class="doinput">
+            <i class="d_yh"></i><input type="text" id="l_username" style="color: #ccc;" onclick="this.value=''"  onblur="this.value=this.value" name="username" value="请输入用户名"/>
+        </div>
+
+        <div class="doinput">
+            <i class="d_pass"></i><input type="password" id="l_password" style="color: #ccc" name="password" >
+        </div>
+
+        <div class="doinput" style="border:0;">
+            <button id="loginbtn" type="submit"><u>登录</u></button>
+            <div class="lo_right">
+                <input class="chk" type="checkbox" name="remember" id="pgremnd" value="记住我">&nbsp;记住我<u>&nbsp;|&nbsp;</u><a href="#">忘记密码？</a>
+            </div>
+        </div>
+		</form>
+    </div>
+
+    <div class="login_con">
+        <img src="__PUBLIC__/Home/images/demo.jpg"/>
+    </div>
+
+    <div class="login_res">
+        <a href="#"><img src="__PUBLIC__/Home/images/res.jpg"/></a>
+    </div>
+    <{else}>
+    <div class='login' id='indexLogin'>
+        <div class='cont'>
+            <div class='inner clr'>
+                <a href='#' title='<{$info.name}>'><img alt='<{$info.name}>' src='<{$info.pic}>' width='48' height='48'></a>
+                <p>
+                    <a href='#' title='<{$info.name}>' style="display: block;"><{$info.name}></a>
+                    <span>欢迎来到囧老大！&nbsp;&nbsp;&nbsp;&nbsp;<a href='./index.php?m=Login&a=loginout'>退出登录</a></span>
+                </p>
+            </div>
+            <a href='./index.php?m=User&a=index&id=<{$info.id}>' class='in-f clr'><span class='myself'>我的囧老大</span><i></i></a>
+        </div>
+    </div>
+    <{/if}>
+</div>
+<!--登陆 end-->
+
+<!--收听 start-->
+<div class="microblog">
+	<h3>收听</h3>
+	<div class="content">
+		<a href="#" target="_blank">QQ空间<span>610<em>万</em></span></a><a href="#" target="_blank">腾讯微博<span>145<em>万</em></span></a><a href="#" target="_blank">新浪微博<span>55<em>万</em></span></a><a href="#" target="_blank">Feed订阅<span>360<em>万</em></span></a>
+	</div>
+</div>
+<!--收听 end-->
+
+<!--标签 start-->
+<div class="tagsblock" style="float: left;">
+	<h3>标签</h3>
+	<div class="content">
+<{foreach $list as $vo}>
+		<p><a href="#" title="<{$vo.tags}>" style=""><{$vo.tags}></a></p>
+<{/foreach}>		
+	</div>
+</div>
+<!--标签 end-->
+
+<!--右侧底部 start-->
+<div id="box">
+	<div id="float" class="div1">
+		<div class="toolbar">
+			<a href="#top" class="back">回到顶部</a><a href="javascript:showSuggestForm()" class="feedback">意见建议</a>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+<!--右侧底部 end-->
+
+<!--网站底部 start-->
+<{include file= "../Public/footer.html"}>
+<!--网站底部 end-->
+
+</body>
+</html>

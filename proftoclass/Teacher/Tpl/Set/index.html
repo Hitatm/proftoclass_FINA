@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的名师小班行</title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" href="__PUBLIC__/Home/css/user.css" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/tools/datepicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function Set(mode, args){
+	switch (mode){
+        case 'Set':
+            //confirm弹出提示框如果点击确定执行OK:function
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+                //向服务器脚本发生GET请求，第一个参数是URL，第二个是回调函数
+				$$.get('./admin.php?m=Set&a=delete&id='+args, function(){$$.redirect();});
+			}});
+			break;
+
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+
+	return false;
+}
+</script>
+</head>
+<body>
+
+<!-- <{include file= "../Public/header.html"}>
+<div style="width:100%;height:25px"></div> -->
+<!--header end-->
+
+<div id="content">
+    <div class="layer layer-full">
+        <div class="tube">
+
+            </div>
+
+           <div class="block brdsep">
+<!-- onsubmit="$$.redirect('./admin.php?m=Set&a=add&'+$(this).serialize());return false;" -->
+         <form method="get" action="__APP__/Set/add" >
+			<table class="table_tools" width="100%" height="200px" border="1" cellpadding="10" cellspacing="10">
+				<tr>
+					<th>
+			             <!--使用了smarty模板标签-->
+			           
+			            <label>选定时间1</label>
+			            <input name="starttime1" type="text" class="text date" style="width:100px;" onClick="WdatePicker()" value="" /> </br>
+			            <label>选定时间2</label>
+			            <input name="starttime2" type="text" class="text date" style="width:100px;" onClick="WdatePicker()" value="" />  </br>
+			            <label>选定时间3</label>
+			            <input name="starttime3" type="text" class="text date" style="width:100px;" onClick="WdatePicker()" value="" /> </br>
+			    <!--             <input type="submit" value="筛选" class="button" />onclick="$$.redirect('');" -->
+						<input type="submit" class="button" value="确认"  />
+						<!-- <button id="loginbtn" style="float:center" type="submit"  ><u>确认</u></button> -->
+					</th>
+					<td align="right" class="simple"></td>
+				</tr>
+			</table>
+			</form>
+
+		</div>
+	  </div>
+	</div>
+
+
+	</dt>
+</dl>
+
+<!--遍历留言结束 -->
+
+<!--显示分页 start-->
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th></th>
+		<td align="right">
+            <div class="turnner" id="turnner">
+            <{$page}>
+            </div>
+		</td>
+	</tr>
+</table>
+<!--显示分页 end-->
+</body>
+</html>
+
+
+<!--开始遍历留言内容-->
+					<!-- 
+					<volist name="list" id="vo" empty="$empty">
+					<dl class="comment" id="set_">
+						<dt ondblclick="$(this).find('.B a').click();">
+							<span class="A"># <{$vo.id}></span>
+							<span class="B"><{$vo.addtime}></span>
+							<span class="C"><{$vo.name}></span>
+							<span class="D"><{$vo.content}></span> 
+                    </volist>
+						-->

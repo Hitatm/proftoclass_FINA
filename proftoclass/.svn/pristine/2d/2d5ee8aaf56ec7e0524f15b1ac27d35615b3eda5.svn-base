@@ -1,0 +1,43 @@
+<?php 
+class ActionAction extends Action{
+	public function user_email(){
+		$m=M('User');
+        $pass=md5($_POST['password']);
+		if(!empty($_POST['email']) && $_SESSION['user']['password']==$pass){
+            //创建数据，清空password
+            unset($_POST['password']);$m->create();
+			if($m->save()){
+                $_SESSION['user'] = $m->where("id=".$_POST['id'])->find();
+				echo 'YES';
+			}else{
+                echo "ERR";
+            }
+		}else{
+            echo '请输入正确的密码！';
+        }
+	}
+
+    public function user_city(){
+        $m=M("City");
+        echo json_encode($m->where("fid=".$_GET['id'])->select());
+    }
+
+    public function user_update(){
+        $m=M("User");
+        $c=M("City");
+        $_POST['id']=$_SESSION['user']['id'];
+        $_POST['age']="|".$_POST['age'][0]."|".$_POST['age'][1]."|".$_POST['age'][2];
+        $_POST['city']="|".$c->where("id=".$_POST['city'][0])->getField('name')."|".$c->where("id=".$_POST['city'][1])->getField('name')."|".$c->where("id=".$_POST['city'][2])->getField('name')."|".$_POST['city'][0]."|".$_POST['city'][1]."|".$_POST['city'][2];
+
+        if(!$m->create()){
+            $this->error($m->getError());
+        }
+
+        if($m->save()){
+            $_SESSION['user'] = $m->where("id=".$_POST['id'])->find();
+            echo 'YES';
+        }else{
+            echo "ERR";
+        }
+    }
+}

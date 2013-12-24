@@ -1,0 +1,19 @@
+<?php
+class PagesAction extends BaseAction{
+    public function _initialize(){
+        //读取配置信息
+        $config = require './Public/Conf/config.php';
+        $this->assign($config);
+        parent::_initialize();
+    }
+    public function path(){
+        $this->display('index');
+    }
+
+    public function html(){
+		$m = M('Category');
+		$this->assign('list',$m->select());
+
+        $this->display("html");
+    }
+};

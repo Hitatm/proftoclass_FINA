@@ -1,0 +1,21 @@
+<?php
+class ContentAction extends Action{
+	public function add(){
+		$this->display("add");
+	}
+	public function insert(){
+		//先执行文件的上传
+		if($_FILES['pic']){
+			$_POST['pic'] = $this->_upload();
+		}
+		$m = M("content");
+		$m->create();
+		$list = $m->add();
+		if($list){
+			$this->success("添加成功！",U("Index/index"));
+		}else{
+			$this->error("添加失败！");
+		}
+	}
+
+}

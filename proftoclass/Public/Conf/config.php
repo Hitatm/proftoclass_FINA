@@ -1,0 +1,27 @@
+<?php
+return array (
+  'site_name' => 'proftoclass',
+  'site_title' => '名师小班行',
+  'site_domain' => 'http://localhost',
+  'site_keywords' => '#',
+  'site_description' => '#',
+  'site_copyright' => 'proftoclass是一个基于ThinkPHP的轻量级系统',
+  'site_counter' => '<script language=\\\\\\\\\\\\\\\'javascript\\\\\\\\\\\\\\\' type=\\\\\\\\\\\\\\\'text/javascript\\\\\\\\\\\\\\\' src=\\\\\\\\\\\\\\\'http://js.users.51.la/14834816.js\\\\\\\\\\\\\\\'></script>',
+  'site_pagesize' => '10',
+  'site_commentlock' => '1',
+  'site_gbooklock' => '1',
+  'site_email_1' => '1',
+  'site_email_2' => '2',
+  'site_email_3' => '3',
+  'url_html' => '0',
+  'html_list_start' => '0',
+  'html_new_start' => '0',
+  'html_list_url' => './new/|index_{listid}',
+  'html_new_url' => './',
+  'html_cahce_time' => '5',
+  'html_cahce_page' => '3',
+  'html_file_suffix' => '.html',
+  'url_map' => './maps/',
+  'TMPL_CACHE_TIME' => '12100',
+);
+?>

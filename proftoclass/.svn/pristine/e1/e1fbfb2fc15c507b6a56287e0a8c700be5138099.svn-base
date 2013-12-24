@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>站点配置 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function settings(mode){
+	switch (mode){
+		case 'Config':
+			$$.post('./admin.php?m='+mode+'&a=configsave', $('#form_detail').serialize(),function(){
+                $$.redirect('./admin.php?m='+mode);
+            });
+			break;
+		default:
+			$$.alert({text : '无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+</script>
+</head>
+<body>
+
+<form id="form_detail" name="form_detail" method="post" action="###" onsubmit="return settings('Config');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>网站名称</th>
+		<td><input class="text" type="text" name="config[site_name]" id="site_name" value="<{$site_name}>" /></td>
+	</tr>
+	<tr>
+		<th>网站域名</th>
+		<td><input class="text" type="text" name="config[site_domain]" id="site_domain" value="<{$site_domain}>" /></td>
+	</tr>
+	<tr>
+		<th>页面标题</th>
+		<td>
+        	<input type="text" value="<{$site_title}>" class="text" name="config[site_title]" />
+		</td>
+	</tr>
+    <tr>
+		<th>页面关键字</th>
+		<td>
+        	<textarea name="config[site_keywords]" id="site_keywords"><{$site_keywords}></textarea>
+		</td>
+	</tr>
+    <tr>
+		<th>页面描述</th>
+		<td>
+        	<textarea name="config[site_description]" id="site_description"><{$site_description}></textarea>
+		</td>
+	</tr>
+    <tr>
+		<th>统计代码</th>
+		<td>
+        	<textarea name="config[site_counter]" id="site_counter"><{$site_counter}></textarea>
+		</td>
+	</tr>
+	<tr>
+		<th>版权信息</th>
+		<td>
+        	<textarea name="config[site_copyright]" id="site_copyright"><{$site_copyright}></textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<th>页面大小</th>
+		<td>
+        	<input type="text" class="text" name="config[site_pagesize]" value="<{$site_pagesize}>" /><br />
+        	<span>首页每页显示的信息数量</span>
+		</td>
+	</tr>
+	<tr>
+		<th>评论控制</th>
+		<td>
+            <select name="config[site_commentlock]">
+                <option value="0" <{if $site_commentlock==0}> selected <{/if}>>关闭</option>
+                <option value="1" <{if $site_commentlock==1}> selected <{/if}>>开启</option>
+            </select>
+            &nbsp;&nbsp;<label for="site_commentlock">关闭全站评论功能</label>
+		</td>
+	</tr>
+	<tr>
+		<th>投稿控制</th>
+		<td>
+            <select name="config[site_gbooklock]">
+                <option value="0" <{if $site_gbooklock==0}> selected <{/if}>>关闭</option>
+                <option value="1" <{if $site_gbooklock==1}> selected <{/if}>>开启</option>
+            </select>
+            &nbsp;&nbsp;<label for="site_gbooklock">关闭前台投稿功能</label>
+		</td>
+	</tr>
+    <tr>
+		<th>发件箱地址</th>
+		<td>
+        	<input type="text" value="<{$site_email_1}>" class="text" name="config[site_email_1]" /><br /><span>用于发送系统邮件的发件箱地址</span>
+		</td>
+	</tr>
+    <tr>
+		<th>邮件服务器</th>
+		<td>
+        	<input type="text" value="<{$site_email_2}>" class="text" name="config[site_email_2]" id="site_emailserver" /><br /><span>发件箱使用的SMTP服务器地址</span>
+		</td>
+	</tr>
+    <tr>
+		<th>邮件登录密码</th>
+		<td>
+        	<input type="password" value="<{$site_email_3}>" class="text" name="config[site_email_3]" id="site_emailpassword" /><br /><span>发件箱登录服务器的验证密码</span>
+		</td>
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="保存更改" /><input type="button" class="button cancle" value="放弃更改" onclick="$$.confirm({text:'放弃添加并关闭窗口？', ok:function(){top.naviShut('system/site');}, icon:'WAR'});" /></td></tr>
+</table>
+</form>
+</body>
+</html>

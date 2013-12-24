@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户编辑 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+
+<script type="text/javascript">
+function user(mode, args){
+	switch (mode){
+		case 'User':
+			$$.post('./admin.php?m='+mode+'&a=update', $('#form_detail').serialize(), function(){
+				$$.redirect('./admin.php?m=User&a=index');
+			});
+			break;
+		default:
+			$$.alert({text:'无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+
+function headerUploadCallback(param){
+	$('#thumb_img').html('<a href="'+param.url+'" target="_blank"><img src="'+param.url+'" /></a>');
+	$('#pic').val(param.dir+param.name);
+	$$.filesUploadLayer.close();
+}
+
+function headerClear(){
+	$('#thumb_img').html('');
+	$('#us_face').val('');
+}
+</script>
+</head>
+<body>
+<form id="form_detail" name="form_detail" method="post" action="###" onsubmit="return user('User','<{$vo.id}>');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+<!--
+	<tr>
+		<th>&nbsp;</th>
+		<td>无效参数[  ]。</td>
+	</tr>
+-->
+	<!--会员遍历-->
+    <tr>
+		<th>所属分组</th>
+		<td>
+        <select name="<{$vo.gid}>">
+        	<option>=选择用户组=</option>
+			<!--用户组遍历-->
+			<{foreach $glist as $v}>
+			
+            <option value="<{$v.name}>" <{if $v.id == $vo.gid}> selected <{/if}>> <{$v.name}></option>
+			
+			
+			<{/foreach}>
+        </select>
+		
+		<span><cite>*</cite> 必填</span>
+		</td>
+	</tr>
+    <tr>
+		<th>头像</th>
+		<td>
+			<div class="thumb">
+            	<div class="thumb_img" id="thumb_img"><a target="_blank" href=""><img src="" /></a></div>
+                <h1><a href="#" onclick="$$.filesUploadLayer.open({dir:'user',url:'./admin.php?m=Files&a=files_upload',callback:'headerUploadCallback',opener:window});return false;">设置头像</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="headerClear();return false;">清除</a></h1>
+            </div>
+            <input type="hidden" name="pic" id="pic" value="<{$vo.pic}>">
+		</td>
+	</tr>
+	<tr>
+		<th>登录帐户</th>
+		<td>
+			<input class="text" type="text" name="username" id="<{$vo.id}>" autocomplete="off" value="<{$vo.username}>" /> <span><cite>*</cite> 必填</span>
+			<script type="text/javascript">$(function(){setTimeout(function(){$('#us_username').val('');},200)});</script>
+		</td>
+	</tr>
+	
+	<tr>
+		<th>用户姓名</th>
+		<td><input class="text" type="text" name="name" id="us_name" value="<{$vo.name}>" /> <span><cite>*</cite> 必填</span></td>
+	</tr>
+	<tr>
+		<th>邮件地址</th>
+		<td><input class="text" type="text" name="email" id="us_email" value="<{$vo.email}>" /></td>
+	</tr>
+	<tr>
+		<th>状态</th>
+		<td><input class="text" type="text" name="phone" id="us_phone" value="<{$vo.state}>" /></td>
+	</tr>
+	<tr>
+		<th>用户描述</th>
+		<td><textarea name="desc" id="gr_desc" cols="45" rows="5"><{$vo.desc}></textarea></td>
+		<input type="hidden" name="id" value="<{$vo.id}>" />
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="确认修改" /><input type="button" class="button cancle" value="放弃修改" onclick="$$.redirect('');" /></td></tr>
+<!--//-->
+</table>
+</form>
+</body>
+</html>

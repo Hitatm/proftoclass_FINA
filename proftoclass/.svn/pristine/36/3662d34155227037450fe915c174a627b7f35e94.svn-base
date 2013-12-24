@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>缓存管理 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function cache(mode, args){
+	switch (mode){
+		case 'cache.clean':
+			args = args || $$.selectval('#cache :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择目录。'});
+				return false;
+			}
+			$$.confirm({text:'确定清理所选目录？', ok:function(){
+				$$.get('?mode='+mode+'&args=' + args, function(){$$.redirect();});
+			}});
+			break;
+		case 'cache.time':
+			$$.get('?mode=' + mode + '&args=' + args);
+			break;
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+</script>
+</head>
+<body>
+
+	<ul class="cache" id="cache">
+		
+    	<li>
+            <span>
+            	<input type="checkbox" name="select" id="" value="dfgdfg" class="checkbox" /> <label for="">选择</label> &nbsp; &nbsp;
+            	<a href="#" onclick="cache('cache.clean', ''); return false;" class="clean">清理</a>
+            </span>
+			<b class="? 'folder' : 'file'"></b>
+        </li>
+
+		<li>
+			<span>
+				<input type="checkbox" name="check" id="selectall" class="checkbox" onchange="$('#cache :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /> <label for="selectall">全选</label> &nbsp; &nbsp;
+				<input type="button" value="清理所选" class="button" onclick="cache('cache.clean');" />
+			</span>
+			设置前端页面缓存更新周期 <input type="text" id="site_cachetime" style="width:4em;" value="" class="text" /> 秒 &nbsp; <input type="button" value="保存" class="button" onclick="cache('cache.time', $('#site_cachetime').val());" />
+		</li>       
+    </ul>
+	
+</body>
+</html>

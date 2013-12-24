@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分组查看 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript">
+function group(mode,args){
+	switch (mode){
+		case 'group.delete':
+			args = args || $$.selectval('#table_list :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择记录。'});
+				return false;
+			}
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+				$$.get('./admin.php?m=Group&a=delete&id=' + args, function(){$$.redirect();});
+			}});
+			break;
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+
+$(function(){
+	$('.table_list tr').hover(function(){
+		$(this).find('.operate').show();	
+	},
+	function(){
+		$(this).find('.operate').hide();
+	});
+});
+</script>
+</head>
+<body>
+
+<table id="table_list" class="table_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th width="32%">用户组</th>
+		<th width="41%">描述</th>
+	</tr>
+	<{foreach $list as $vo}>
+	<tr>
+		<td><input type="checkbox" class="checkbox" name="select" id="select_1" value="111" onchange="var _this = $(this); _this.prop('checked') ? _this.parent().parent().addClass('S') : _this.parent().parent().removeClass('S');" /></td>
+		
+		<td><{$vo.id}></td>
+		<td>
+			<a class="update" href="#"><{$vo.name}></a><br />
+			<div class="operate"><a class="update" href="./admin.php?m=Group&a=edit&id=<{$vo.id}>">编辑</a><span>|</span>
+			<a class="delete" href="javascript:void(0);" onclick="group('group.delete','<{$vo.id}>');">删除</a></div>
+        </td>
+		<td><{$vo.desc}></td>
+	</tr>
+	<{/foreach}>
+<!--
+	<tr>
+		<td colspan="4" align="center">暂无记录。</td>
+	</tr>
+-->
+    <tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th width="32%">用户组</th>
+		<th width="41%">描述</th>
+	</tr>
+</table>
+
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th>
+			<select><option value="">批量操作</option>
+			<option value="group.delete">删除选择</option>
+			</select> <input type="button" value="应用" class="button" onclick="group($(this).parent().find('select').val());" />
+		</th>
+		<td align="right">
+			<div class="turnner" id="turnner">
+				<{$page}>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

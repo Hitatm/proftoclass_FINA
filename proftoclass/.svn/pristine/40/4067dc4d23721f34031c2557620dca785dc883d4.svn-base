@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户查看 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function user(mode, args){
+	switch (mode){
+		case 'user.delete':
+			args = args || $$.selectval('#table_list :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择记录。'});
+				return false;
+			}
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+				$$.get('./admin.php?m=User&a=delete&id=' + args, function(){$$.redirect();});
+			}});
+			break;
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+
+$(function(){
+	$('.table_list tr').hover(function(){
+		$(this).find('.operate').show();	
+	},function(){
+		$(this).find('.operate').hide();
+	});
+});
+</script>
+</head>
+<body>
+<form method="get" action="###" onsubmit="$$.redirect('./admin.php?m=User&'+$(this).serialize());return false;">
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+		<th>
+            <select class="bnt"><option value="">批量操作</option>
+           	  <option value="user.delete">删除选择</option>
+            </select> <input type="button" value="应用" class="button" onclick="user($(this).parent().find('.bnt').val());" />
+            
+            <select name="by">
+                <option value="username">用户名</option>
+                <option value="name">姓名</option>
+            </select>
+            <input type="text" class="text" name="key" id="search_key" size="20" value="" />
+            <input type="submit" value="筛选" class="button" />
+			<input type="button" value="重置" class="button" onclick="$$.redirect('');" />
+        </th>
+	</tr>
+</table>
+</form>
+<table id="table_list" class="table_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th width="16%">用户名</th>
+		<th width="16%">用户组</th>
+		<th width="20%">姓名</th>
+		<th width="21%">级别</th>
+		<th width="17%">状态</th>
+	</tr>
+<!--开始遍历-->
+
+<{foreach $list as $vo}>
+	<tr>
+		<td><input type="checkbox" class="checkbox" name="select" id="select_" value="" onchange="var _this = $(this); _this.prop('checked') ? _this.parent().parent().addClass('S') : _this.parent().parent().removeClass('S');" /></td>
+		
+				<td><{$vo.id}></td>
+				<td>
+					<a href="#"><{$vo.username}></a><br />
+					<div class="operate">
+						<a class="update" href="./admin.php?m=user&a=edit&id=<{$vo.id}>">修改</a><span>|</span>
+						<a class="delete" href="javascript:void(0);" onclick="user('user.delete','<{$vo.id}>');">删除</a>
+					</div>
+				</td>
+				<td><{$vo.gname}></td>
+				<td><{$vo.name}></td>
+				<td><{$vo.desc}></td>
+				<td><{$vo.state}></td>
+			
+        
+	</tr>
+	<{/foreach}>
+	<!--
+	<tr>
+		<td colspan="7" align="center">暂无记录。</td>
+	</tr>
+	-->
+    <tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th width="16%">用户名</th>
+		<th width="16%">用户组</th>
+		<th width="20%">姓名</th>
+		<th width="21%">级别</th>
+		<th width="17%">状态</th>
+	</tr>
+</table>
+
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+		<td align="right">
+		<div class="turnner" id="turnner">
+			<{$page}>
+        </div>
+			
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?php
+class TagsAction extends BaseAction{
+	// public function index(){
+		// $_POST['classAction']="model";
+		// $m=D("Content");
+		// var_dump($m->relation('Tags')->select());
+	// }
+	
+		
+	public function _tigger_list(&$list){
+		//遍历文章信息并追加封装信息
+		$m = M("totags");
+		foreach($res as &$v){
+			$res=$m->query("select t.title from lh_totags tt,lh_tags t where tt.tid=t.id and tt.cid=".$v['id']);   
+				var_dump($res);
+				$rname=array();
+					foreach($list as $vb){
+						$rname[]=$vb['tags'];
+					}
+					$v['rname']=implode(",",$rname);
+		}
+	}
+}

@@ -1,0 +1,36 @@
+<?php
+class MessageAction extends BaseAction{
+    public function _filter(&$map){
+        if(!empty($_GET['keyword'])){
+            $map['content']=array('like',"%{$_GET['keyword']}%");
+        }
+        //封装时间查询条件
+        if(!empty($_GET['starttime']) && !empty($_GET['stoptime'])){
+            $start = strtotime($_GET['starttime']);
+            $stop  = strtotime($_GET['stoptime']);
+            $map['addtime']= array(array('gt',$start),array('lt',$stop));
+        }
+
+        if(!empty($_GET['starttime']) && empty($_GET['stoptime'])){
+            $start = strtotime($_GET['starttime']);
+            $map['addtime']= array('gt',$start);
+        }
+
+        if(!empty($_GET['stoptime']) && empty($_GET['starttime'])){
+            $stop  = strtotime($_GET['stoptime']);
+            $map['addtime']= array('lt',$stop);
+        }
+    }
+
+    public function index(){
+        $m=M("Message");
+        $u=M("User");
+        $list=$m->select();
+        foreach($list as $k=>$v){
+            $list[$k]["fname"]=$u->where("id=".$v["uid"])->getField("name");
+            $list[$k]["sname"]=$u->where("id=".$v["mid"])->getField("name");
+        }
+        $this->assign("list",$list);
+        $this->display("index");
+    }
+}

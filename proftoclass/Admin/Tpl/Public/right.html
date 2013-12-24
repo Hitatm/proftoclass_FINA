@@ -1,0 +1,21 @@
+
+
+<!--标签 start-->
+<div class="tagsblock" style="float: left;">
+    <h3>标签</h3>
+    <div class="content">
+        <{foreach $tags as $vo}>
+        <{if $vo.title!=''}><p><a href="__ROOT__?m=Index&a=sear&kw=<{$vo.title}>" title="<{$vo.title}>"><span style="color:<{$vo.color}>"><{$vo.title}></span></a></p><{/if}>
+        <{/foreach}>
+    </div>
+</div>
+<!--标签 end-->
+
+<!--右侧底部 start-->
+<!-- <div id="box">
+    <div id="float" class="div1">
+        <div class="toolbar">
+            <a href="#" class="back">回到顶部</a><a href="javascript:void(0)" class="feedback">查看留言</a>
+        </div>
+    </div>
+</div> -->

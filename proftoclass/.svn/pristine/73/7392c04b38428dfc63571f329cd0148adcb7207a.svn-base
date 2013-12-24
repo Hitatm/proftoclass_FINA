@@ -1,0 +1,23 @@
+<?php 
+class PluginAction extends BaseAction{
+	//插件管理
+	function plugin(){
+	
+	}
+	
+	//执行编辑插件
+	function update(){
+	
+	}
+	
+	//导出插件
+	function of_plugin(){
+	
+	}
+	
+	//导入插件
+	function to_plugin(){
+	
+	}
+	
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>名师小班行</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<link rel="stylesheet" href='__PUBLIC__/Home/css/style_web.css' type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/tbox.js"></script>
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离 
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','top':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'top':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+
+	TB_box(".tbox","TB_window","__APP__?m=Login&a=res&height=460;width=550");
+	TB_box(".feedback","TB_window","__APP__?m=gbook&a=add&height=500;width=450");
+});
+//执行登陆
+function login(){
+
+	$.post('__APP__/Login/dologin/',$('#dologin').serialize(),function(data){
+            if(data=="ERR"){
+                alert("用户名或是密码错误！");
+            }else{
+                $(".dologin").html(data);
+            }
+		}
+	);
+	
+	return false;
+}
+
+function myup(res,id){
+	$.ajax({
+		type:"GET",
+		url:"__APP__/Index/doup/up/"+res+"/id/"+id,
+		success:function(msg){
+            if(msg=="login"){
+                alert("请先进行登录！");
+            }else if(msg=="ERR"){
+                alert("您已经发表过意见了");
+            }else{
+			    document.getElementById(res).innerHTML=msg;
+            }
+		}
+	});
+}
+
+function comments(id){
+	$("#comments_"+id).toggle(600);
+}
+
+function myfunc(id){
+	$.ajax({
+		type:'POST',
+		url:"__APP__/Index/talk",
+		data:$('#textcontent_'+id).serialize(),
+		dataType:'json',
+		success:function(msg){
+            $("#c_con_"+msg.tid).append('<div class="discuss1"><div style="width: 30px;height: 30px;float:left"><img style="width:30px;height:30px;" src="__ROOT__'+msg.pic+'"></div><div class="c_content">'+msg.content+'<span>'+msg.num+'</span></div></div>')
+            $(".discuss").val("在来说两句...");
+		}
+	})
+	
+	return false;
+}
+</script>
+<style>
+
+</style>
+</head>
+<body>
+<{include file= "../Public/header.html"}>
+<!--网站主体 start-->
+<div class="main">
+<div class="content-block" style="float:center">
+    <div class="col2" style="float:right ">
+        <!--登陆 start-->
+        <{include file= "../Public/login.html"}>
+        <!--登陆 end-->
+
+        <!--右侧 start-->
+        <{include file= "../Public/right.html"}>
+        <!--右侧 start-->
+    </div>
+
+<div class="col1" style="float:left margin:10 px">
+    <!--遍历首页文章 start-->
+
+    
+        
+ 
+	<div class="content_left" style="position: relative;">
+		<div class="pop-triangle"></div>
+		<div class="feed-container-top"></div>
+		
+		<div class="block untagged" style="float :left" id='#'>
+		
+			
+
+			<!--标题可以不填-->
+
+	
+			<div class="content" style="float:left" title="#">
+				<div style="text-align:left;">
+					<h1 style="font:italic bold 18pt Times,serif">名师小班行活动简介</h1>
+				<p>
+					存储器管理和常见的分区算法分页存储分段存储段页式存储
+        1、逻辑地址和物理地址的概念
+逻辑地址（Logical Address）是指由程式产生的和段相关的偏移地址部分。只有在Intel实模式下，逻辑地址才和物理地址相等（因为实模式没有分段或分页机制,Cpu不进行自动地址转换）；
+物理地址（Physical Address）是指出现在CPU外部地址总线上的寻址物理内存的地址信号，是地址变换的最终结果地址。（假如启用了分页机制，那么线性地址会使用页目录和页表中的项变换成物理地址。假如没有启用分页机制，那么线性地址就直接成为物理地址了）
+</p>
+<p>
+        2、什么是地址重定位(地址变换)，什么是静态地址重定位，什么是动态地址重定位
+重定位就是把程序中相对地址变换为绝对地址。通常是把在装入时对目标程序中指令和数据的修改过程称为重定位。有静态重定位和动态重定位两种重定位技术。
+因为地址变换通常是在装入时一次完成的，以后不再改变，故称为静态重定位。
+在运行过程中程序在内存中的位置可能经常要改变，此时就应采用动态运行时装入的方式。动态运行时的装入程序在把装入模块装入内存后，并不立即把装入模块中的相对地址转换为绝对地址，而是把这种地址转换推迟到程序真正要执行时才进行。因此，装入内存后的所有地址都仍是相对地址。为使地址转换不影响指令的执行速度，这种方式需要一个重定位寄存器的支持。
+</p>
+				</div>
+
+			</div>
+
+
+				
+			</div>
+		</div>
+</div>
+
+</div>
+
+   
+
+
+</div>
+
+<!--网站底部 start-->
+<{include file= "../Public/footer.html"}>
+<!--网站底部 end-->
+<div id="TB_window"></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分组添加 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+
+<script type="text/javascript">
+function group(mode, args){
+	switch (mode){
+		case 'Group':
+			//Ajax返回的参数(第一个是URL,第二个是数据,第三个是回调函数)
+			$$.post('./admin.php?m='+mode+'&a=insert', $('#form_detail').serialize(), function(){
+				//关闭窗口和打开窗口(执行方法在后台首页index.php中)
+				top.naviSwitcher('group/add', 'group/select');
+			});
+			break;
+		default:
+			$$.alert({text:'无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+</script>
+</head>
+<body>
+<!--上传表单-->
+<form id="form_detail" name="detail" method="post" action="###" onsubmit="return group('Group');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>分组名称</th>
+		<td><input class="text" type="text" name="name" id="gr_name" /> <span><cite>*</cite> 必填</span></td>
+	</tr>
+	<tr>
+		<th>分组描述</th>
+		<td><textarea name="desc" id="gr_desc" cols="45" rows="5"></textarea></td>
+	</tr>
+	<tr>
+		<th>分组权限</th>
+		<td>
+		<!--遍历分组权限-->
+			<table id="rights_" class="rights" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th colspan="3"><span><a href="javascript:void(0);" onclick="var items = $('#rights_').find(':checkbox'); items.prop('checked', !items.prop('checked'));" onmouseover="$('#rights_').addClass('H');" onmouseout="$('#rights_').removeClass('H');">全选</a></span>Name</th>
+				</tr>
+				<!--又遍历了一次-->
+				<tr>
+					<td width="120"><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value="" /><label for="">value</label></td>
+					
+					<td width="120"><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value="" /><label for=""></label></td>
+					<!--<td width="120">&nbsp;</td>-->
+		
+					<td><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value="" /><label for=""></label></td>
+					<!--<td>&nbsp;</td>-->
+				</tr>
+				<!--又遍历了一次-->
+			</table>
+		<!--遍历分组权限-->
+		</td>
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="确认添加" /><input type="button" class="button cancle" value="放弃添加" onclick="$$.confirm({text:'放弃添加并关闭窗口？', ok:function(){top.naviShut('member/group.insert');}, icon:'WAR'});" /></td></tr>
+</table>
+</form>
+</body>
+</html>

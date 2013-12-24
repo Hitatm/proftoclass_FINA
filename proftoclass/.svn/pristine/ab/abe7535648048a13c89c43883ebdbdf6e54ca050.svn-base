@@ -1,0 +1,33 @@
+<div style="clear:both;height:20px;width:100%;overflow:hidden"></div>
+<div class="footer_bg">
+    <div class="footer">
+        <div class="footer_margin">
+            <ul>
+                <li class="about_us">
+                    <a href="#"> <span> <img src="__PUBLIC__/Home/images/help1.png" width="88px" height="70px"> </span> 关于我们 </a>
+                </li>
+                <li class="food_help">
+                    <a href="#"> <span> <img src="__PUBLIC__/Home/images/help2.png" width="88px" height="70px"> </span> 帮助 </a>
+                </li>
+                <li class="food_tool">
+                    <a href="#"> <span> <img src="__PUBLIC__/Home/images/help3.png" width="88px" height="70px"> </span> 抓图工具 </a>
+                </li>
+                <li class="food_tll">
+                    <a href="#"> <span> <img src="__PUBLIC__/Home/images/help4.png" width="88px" height="70px"> </span> 联系我们 </a>
+                </li>
+                <li class="food_homp">
+                    <a href="#"> <span> <img src="__PUBLIC__/Home/images/help5.png" width="88px" height="70px"> </span> 提建议 </a>
+                </li>
+            </ul>
+
+            <div class="footer_right">
+                <div class="copyright">
+                    <!--Copyright © 2012 jionglaoda.com All Rights Reserved 囧老大 版权所有 京ICP备1101111号-->
+                </div>
+                <div class="wail-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

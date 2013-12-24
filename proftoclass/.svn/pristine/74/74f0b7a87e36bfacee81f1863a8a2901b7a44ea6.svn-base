@@ -1,0 +1,35 @@
+<?php
+class IndexAction extends BaseAction{
+    public function index(){
+        //查询所有菜单
+        $m = D('Models');
+        $list = $m->relation('Action')->where("state = 0")->select();
+        $this->assign('list',$list);
+        //查询默认菜单
+        $a= M('Action');
+        $alist = $a->where('state = 1')->select();
+        $this->assign('alist',$alist);
+        //指定模版
+		$this->display('index');
+    }
+	public function config_site(){
+		$this->display("config.site");
+	}
+	public function cache(){
+		$this->display("cache");
+	}
+	
+	public function logs(){
+		$this->display("logs");
+	}
+	public function files(){
+		$this->display("files.select");
+	}
+	public function modules(){
+		$this->display("modules");
+	}
+	public function group_insert(){
+		$this->display("group.insert");
+	}
+}
+?>

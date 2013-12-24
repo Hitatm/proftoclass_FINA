@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模型管理 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+
+<script type="text/javascript">
+function models(mode){
+	switch (mode){
+		case 'Models':
+			//Ajax返回的参数(第一个是URL,第二个是数据,第三个是回调函数)
+			$$.post('./admin.php?m='+mode+'&a=doupdate', $('#form_detail').serialize(), function(){
+                window.parent.alert = function() {
+                    return ;
+                }
+                parent.location.reload();top.naviUpdate(); $$.redirect();
+			});
+			break;
+		default:
+			$$.alert({text:'无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+</script>
+</head>
+<body>
+<!--上传表单-->
+<form id="form_detail" name="detail" method="post" action="###" onsubmit="return models('Models');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>模块名称</th>
+		<td><input class="text" type="text" name="title" id="gr_name" value="<{$list[0].title}>" /></td>
+	</tr>
+	<tr>
+		<th>模块描述</th>
+		<td><textarea name="desc" id="gr_desc" cols="45" rows="5"><{$list[0].desc}></textarea></td>
+	</tr>
+	<tr>
+		<th>模块功能</th>
+		<td>
+		<!--遍历分组权限-->
+            <volist name="list" id="vo">
+			<table id="rights_" class="rights" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th colspan="6">
+                        <span>
+                            <a href="javascript:void(0);" onclick="var items = $('#rights_').find(':checkbox'); items.prop('checked', !items.prop('checked'));" onmouseover="$('#rights_').addClass('H');" onmouseout="$('#rights_').removeClass('H');">全选</a>
+                        </span><{$vo.title}>
+                    </th>
+				</tr>
+				<!--遍历模型下的方法-->
+				<tr>
+                    <volist name="vo['action']" id="v" mod="3">
+                        <eq name="mod" value="0"></tr><tr></eq>
+                        <td>
+                            <input class="checkbox" type="checkbox" name="action[]" value="<{$v.id}>" <if condition="$v.display eq 0"> checked </if> />
+                            <label for=""><{$v.title}></label>
+                        </td>
+
+
+                    </volist>
+				</tr>
+				<!--遍历模型下的方法-->
+			</table>
+            </volist>
+		<!--遍历分组权限-->
+		</td>
+	</tr>
+	<tr class="action">
+        <th>&nbsp;</th>
+        <td>
+            <input type="hidden" name="mid" value="<{$list[0].id}>" />
+            <input type="submit" class="button" value="确认修改" />
+            <input type="button" class="button cancle" value="放弃修改" onclick="$$.confirm({text:'放弃修改并关闭窗口？', ok:function(){top.naviShut('models/select');}, icon:'WAR'});" />
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

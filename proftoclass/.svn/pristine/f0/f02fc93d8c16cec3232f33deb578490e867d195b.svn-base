@@ -1,0 +1,90 @@
+<?php
+class HomeAction extends Action{
+    public function _initialize(){
+        $this->assign($this->User_Style());
+        $this->assign($this->Content_Style());
+
+        $this->assign("action",ACTION_NAME);
+
+		$this->assign($this->Tags_Style());
+
+    }
+    //从SESSION中获取会员信息并赋值
+    public function User_Style(){
+        $array=array();
+        $array["user"]=$_SESSION['user'];
+        return $array;
+    }
+
+    //获取内容信息并赋值
+    public function Content_Style(){
+        static $array=array();
+        if(empty($array)){
+            $m=M("Content");
+            $array['content']=$m->where("state > 3")->select();
+        }
+        return $array;
+    }
+	//获取标签信息并赋值
+	public function Tags_Style(){
+		$m = M("Tags");
+		$arr=array();
+			$arr['tags'] = $m->limit(22)->select();
+		return $arr;
+	}
+
+    //获取单条信息
+    public function getFind($table='',$fid=''){
+		$db=empty($table)?$this->getActionName():$table;
+		
+        $m=M($db);
+		
+        if(is_numeric($fid)){
+            $fid = !empty($id)?$_GET['id']:$fid;
+            return $m->where("id = {$fid}")->find();
+        }else{
+            return "非法参数";
+        }
+    }
+
+    //审帖随机信息获取
+    public function getRand(){
+        $m=M("Content");
+        $num=$m->where("state < 3 and state > -100")->getField('id',true);
+        $rand=count($num)-1;
+
+        //尽量避免重复
+        $list=range(0,$rand);
+        shuffle($list);
+
+        return $m->where("state < 3 and state > -100 and id=".$num[$list[0]])->find();
+    }
+
+    //执行文件上传方法
+    public function _doupload($name="pic"){
+        import('ORG.Net.UploadFile');
+        $upload = new UploadFile();// 实例化上传类
+        $upload->maxSize  = 3145728 ;// 设置附件上传大小
+        //$upload->allowExts  = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->savePath =  './Uploads/Home/'.date("Ymd")."/";// 设置附件上传目录
+        if(!$upload->upload()) {// 上传错误提示错误信息
+            return false;
+        }else{// 上传成功 获取上传文件信息
+            $file=$upload->getUploadFileInfo();
+            $_POST[$name]=ltrim($file[0]["savepath"],".").$file[0]["savename"];
+            return $file;
+        }
+    }
+
+    //执行分页方法
+    public function _limit($User,$where,$pages){
+        import('ORG.Util.Page');// 导入分页类
+        $count  = $User->where($where)->count();// 查询满足要求的总记录数
+        $Page   = new Page($count,$pages);// 实例化分页类 传入总记录数和每页显示的记录数
+        $show   = $Page->show();// 分页显示输出
+        $array['show']=$show;
+        $array['first']=$Page->firstRow;
+        $array['list']=$Page->listRows;
+        return $array;
+    }
+}

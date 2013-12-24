@@ -1,0 +1,9 @@
+<div class="pb8">
+    <ul class="ctr-sw">
+        <li <{if $action==index}> class="cur" <{/if}>><a href="__APP__?m=User&a=index&id=<{$user.id}>">基本信息</a><i></i></li>
+        <li <{if $action==user_email}> class="cur" <{/if}>><a href="__APP__?m=User&a=user_email&id=<{$user.id}>">邮箱设置</a><i></i></li>
+        <li <{if $action==user_password}> class="cur" <{/if}>><a href="__APP__?m=User&a=user_password&id=<{$user.id}>">修改密码</a><i></i></li>
+        <li <{if $action==user_bind}> class="cur" <{/if}>><a href="__APP__?m=User&a=user_bind&id=<{$user.id}>">绑定账号</a><i></i></li>
+        <li <{if $action==user_bscription}> class="cur" <{/if}>><a href="__APP__?m=User&a=user_bscription&id=<{$user.id}>">邮件订阅</a><i></i></li>
+    </ul>
+</div>

@@ -1,0 +1,75 @@
+<?php
+class PubuliuAction extends Action{
+
+	public function index(){
+		$this->display("list");
+	}
+	
+	
+	public function fun(){
+
+		$maxpage=0;
+		$m = M('content'); // 实例化pul对象
+
+		import('ORG.Util.Page');// 导入分页类
+		$count= $m->count();// 查询总记录数
+		$Page= new Page($count,5);// 实例化分页类 传入总记录数和每页显示的记录数
+		$maxpage=ceil($count/5);
+		$show = $Page->show();// 分页显示输出
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+		$list = $m->limit($Page->firstRow.','.$Page->listRows)->select();
+		
+		//判断用户是否登录
+		if($_SESSION['userinfo']['username']==" "){
+			$this->display("index");
+		}else{
+			//判断传过来的页数和最大页数的关系									
+		if($_GET['p']<=$maxpage){
+			foreach($list as $v){
+                echo   "<div class='item'>
+                        <div class='item1'>
+                        
+                        <div class='operation'>
+                            <a class='optionbtn PF_textga o_left01 pin_bt' save href='javascript:;' title='顶起'>
+                            <i class='PF_icon PF_icon97'></i>顶起</a>
+
+                            <a  href='javascript:;' class='optionbtn PF_textga o_left01 pin_bt save' title='踩死'>
+                                <i class='PF_icon PF_icon106'></i>踩死
+                            </a>
+                            <a href='javascript:;' id='{$v['id']}'  onclick='like({$v['id']})' class='optionbtn PF_textga o_left01 pin_bt save' title='喜欢'>
+                                <i class='PF_icon PF_icon105'></i>喜欢
+                            </a>
+
+                            <a href='javascript:abc({$v['id']});' class='optionbtn PF_textga o_left01 pin_bt save' title='评论'>
+                                <i class='PF_icon PF_icon35'></i>评论
+                            </a>
+                        </div>
+                        </div>
+                        <a href='#'><img src='".__ROOT__."/Uploads/images/{$v['pic']}'/></a>
+                        <div style='position:absolute;width: 211px;z-index:10'>
+                        外国美女
+                        </div>
+                        <div class='aaa' style='display:none'>".$maxpage."</div>
+						
+						
+						<ul class='pinlist origin'>
+							<li class='first'>
+
+							</li>
+
+							
+						<li class='private Form01' id='Form_{$v['id']}' rel='none' style='display:none;padding-top:5px;'>
+							<p>
+								<textarea id='comment'>我来说两句...</textarea>
+								<button class='sx_enter' onclick='func({$v['id']},{$_SESSION['userinfo']['username']},$(\"#comment\").html())'>发送</button>
+							</p>
+						</li>
+						</ul>
+											
+					</div>";
+								
+				}
+			}
+		}	
+	}
+}

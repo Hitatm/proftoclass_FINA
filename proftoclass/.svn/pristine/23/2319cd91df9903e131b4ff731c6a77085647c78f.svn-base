@@ -1,0 +1,28 @@
+<?php 
+class UserAction extends BaseAction{
+	
+	//搜索方法(_filter是公共类中的方法)
+	public function _filter(&$map){
+		if(isset($_GET["by"]) && isset($_GET["key"])){
+			$map[$_GET["by"]]=array('like',"%{$_GET['key']}%");
+		}
+	}
+	
+	public function add(){
+		$m = M("Group");
+		$this->assign("glist",$m->select());
+		parent::add();
+	}
+	
+	
+	public function index(){
+		$_POST['actionName']='model';
+		parent::index();
+	}
+	
+	public function edit(){
+		$m = M("Group");
+		$this->assign("glist",$m->select());
+		parent::edit();
+	}
+}

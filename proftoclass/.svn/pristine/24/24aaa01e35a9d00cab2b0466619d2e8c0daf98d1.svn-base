@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>已上传到服务器的文件 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$default}>/default/skins/style.css" />
+<script type="text/javascript" src="<{$default}>/default/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$default}>/default/js/system.js"></script>
+<script type="text/javascript" src="<{$default}>/default/js/jquery.ui.min.js"></script>
+</head>
+<body style="padding:0;">
+<div class="tabs">
+	<div></div>
+	<a href="#">本地</a>
+	<a href="#" class="C">已上传</a>
+	<a href="#">网络</a>
+</div>
+<div class="files_upload_main">
+	<div class="files_search"><input name="keyw" id="keyw" type="text" value="" class="text" /> <input type="button" class="button" value="搜索" onclick="$$.redirect('?mode=files.server&type=类型&show=显示&keyw='+$('#keyw').val());" /></div>
+    <h1>已上传到服务器的文件</h1>
+    <div class="files_server_main" style="clear:both;">
+	
+        <div class="file_page"></div>
+    	<h2 class="files_server_title">
+        	<a href="?mode=files.server&type=type&show=all" class="current">所有文件</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="?mode=files.server&type=type&show=image" class="current">图像 (100)</a>
+        </h2>
+        <div style="clear:both;"></div>
+        <ul>
+        	<li>
+            	<span><a href="#" onclick="$$.filesUploadLayer.opener.ccc({id:11,image:? 'true' : 'false',http:false,name:'',title:'',dir:'',url:'',pipe:'',size:});return false;">使用</a></span>
+                <a target="_blank" href=""><img src="" height="40" alt="" title="" /></a> 
+                <strong></strong>&nbsp; |&nbsp; KB
+            </li>
+			<!--
+			<li>&nbsp; &nbsp; 暂无记录。</li>
+			-->
+        </ul>
+	</div>
+</div>
+</body>
+</html>

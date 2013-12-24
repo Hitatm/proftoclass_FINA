@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>注册账号</title>
+    <style type="text/css">
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 14px/1.6 "Helvetica",arial,sans-serif;
+        }
+
+        body a {
+            text-decoration: none !important;
+        }
+
+
+        a {
+            color: #0082cb;
+        }
+
+        button {
+            overflow: visible;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            border: 0 none;
+            outline: none;
+        }
+
+        #signup-form {
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            z-index: 1002;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+            display: none;
+        }
+
+        .login-form a.close, #suggest-form a.close, #report-form a.close, #face-form a.close {
+            display: block;
+            height: 45px;
+            width: 45px;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .login-form .close .bti, .suggest-form .close .bti, #report-form .close .bti, #face-form a.close .bti {
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+            background: url(__PUBLIC__/Home/images/web_icon.png) no-repeat -120px 0;
+            opacity: 0.55;
+            position: relative;
+            margin: 12px;
+        }
+
+        .login-form a.close, #suggest-form a.close, #report-form a.close, #face-form a.close {
+            display: block;
+            height: 45px;
+            width: 45px;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .login-form a.close, #face-form a.close {
+            margin: 0 0 0 495px;
+        }
+
+        .login-form .col1 {
+            float: left;
+            width: 249px;
+            height: 260px;
+            background: #fff;
+            padding: 25px;
+        }
+
+        #signup-form .col1 {
+            height: auto;
+        }
+
+        #message-form h1, .login-form h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 15px;
+        }
+
+        #signup-form .col1 .inputbox {
+            height: auto;
+        }
+
+        .login-form .col1 .inputbox label {
+            display: block;
+            line-height: 100%;
+            padding: 0 0 8px;
+        }
+
+        input[type=text], input[type=email], input[type=password] {
+            border: 1px solid #daceb7;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.05) inset,0 1px 0 #fff;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            line-height: 100%;
+        }
+
+        .login-form .col1 .inputbox input {
+            vertical-align: middle;
+            font-size: 18px;
+            width: 94%;
+            margin: 0 0 15px;
+            padding: 5px;
+        }
+
+        .simple_captcha {
+            border: 1px solid #ccc;
+            padding: 5px !important;
+            display: table;
+        }
+
+        .simple_captcha div {
+            display: table;
+        }
+
+        .simple_captcha .simple_captcha_image {
+            border: 1px solid #ccc;
+            margin: 0px 0px 2px 0px !important;
+            padding: 0px !important;
+        }
+
+        .login-form .col1 .optionbox {
+            float: left;
+        }
+
+
+        .login-form .col1 button {
+            color: #646362;
+        }
+
+        #report-form button, #suggest-form button, #message-form button, .comments .login-block a, .comments #comment_submit, .login-form .col1 button {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #6a5c4c;
+            background: #f1ede3;
+            background: -moz-linear-gradient(top, #f7f3ee, #f1ede3);
+            background: -webkit-linear-gradient(top, #f7f3ee, #f1ede3);
+            border: 1px solid #c6baa2;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .login-form .col1 button {
+            float: right;
+            width: 72px;
+            height: 38px;
+            line-height: 38px;
+            _height: 33px;
+            _line-height: 33px;
+        }
+
+        .login-form .col2 {
+            float: left;
+            width: 189px;
+            background: #f7f5f2;
+            height: 260px;
+            padding: 25px;
+            border-left: 1px dashed #d6cab7;
+        }
+
+        #signup-form .col2 {
+            height: 400px;
+        }
+
+        #message-form h1, .login-form h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 15px;
+        }
+
+        .login-form .col2 a.button {
+            width: 70px;
+            height: 36px;
+            line-height: 36px;
+            margin-top: 15px;
+        }
+
+        .login-form .col2 .intro {
+            height: 88px;
+            line-height: 170%;
+        }
+
+        .sina_login {
+            visibility: visible !important;
+        }
+
+        .intro2 a {
+            float: left;
+            margin: 5px 5px 0 0;
+        }
+
+        .login-form .col2 a.button {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFF;
+            background: #6ba1fa;
+            background: -moz-linear-gradient(top, #6ba1fa, #417bd8);
+            background: -webkit-linear-gradient(top, #6ba1fa, #417bd8);
+            border: 1px solid #417bd8;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="signup-form" class="login-form" style=" display: block;float: left;">
+        <a href="#" class="close"><div class="bti"></div></a>
+        <div class="ie6-fix"></div>
+        <div class="col1">
+            <h1>注册</h1>
+            <form accept-charset="UTF-8" action="__APP__/Login/res" class="new_user" id="new_user" method="post" novalidate="novalidate">
+                <div class="inputbox">
+                    <label for="user_login">登录名</label>
+                    <input id="user_login" name="username" size="30" type="text">
+                    <div id="insertlogin"></div>
+
+                    <label for="email">邮箱</label>
+                    <input id="user_email" name="email" size="30" type="text">
+                    <div id="insertemail"></div>
+
+                    <label for="password">密码</label>
+                    <input id="user_password" name="password" size="30" type="password">
+                    <div id="insertpwd"></div>
+                    <label for="password_confirmation">确认密码</label>
+                    <input id="user_password_confirmation" name="password2" size="30" type="password">
+                    <div id="insertconpwd"></div>
+
+                </div>
+
+                <div class="optionbox"><label for="remember_me"> 已阅读并同意<a href="#">囧老大网站用户使用协议</a></label></div>
+                <button type="submit" class="cancel">注册</button>
+            </form>  </div>
+        <div class="col2">
+            <h1>创建账号</h1>
+            <div class="intro">
+                创建账号后你可以跟其他网友发小纸条，关注你的偶像，有很多好处哦，亲<br><br>
+            </div>
+            <div class="intro2 cf" style="display: block;">
+                <div class="sina_login">使用相关帐号登录</div>
+                <a href="#"><img src="#" title="通过新浪微博帐号登录"></a>
+                <a href="#"><img src="#" title="通过人人网帐号登录"></a>
+                <a href="#"><img src="#6" title="通过QQ帐号登录"></a>
+                <a href="#"><img src="#" title="通过腾讯微博帐号登录"></a>
+            </div>
+            <a href="#" class="button loginBtn" id="loginBtn" style="font-size:18px;width: 145px; height: 32px;">立即登录</a>
+        </div>
+    </div>
+<{$close}>
+</body>
+</html>

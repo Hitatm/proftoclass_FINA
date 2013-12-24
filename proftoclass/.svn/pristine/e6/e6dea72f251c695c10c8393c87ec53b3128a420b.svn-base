@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>囧老大</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<link rel="stylesheet" href='__PUBLIC__/Home/css/style_web.css' type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离   
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','top':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'top':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+});
+
+//执行文件的上传操作
+var pcob = new Object();
+//文件上传后，在iframe中，会调用此方法
+function uploadCallBack(filename){
+    if(filename==false){
+        alert("文件上传失败");
+        return;
+    }
+}
+
+</script>
+</head>
+<body>
+<{include file= "../Public/header.html"}>
+<!--网站主体 start-->
+<div class="main">
+<div class="content-block">
+<div class="col1">
+	<div class="content_add">
+        <{if $smarty.get.state=="YES"}>
+        <!-- start -->
+        <div class="postsuccess">
+            <h2>非常感谢您的分享!</h2>
+            <p>您刚刚提交的糗事将在管理员审核通过之后发表。</p>
+            <p>作为回报，本站已将您的人品 +1，接下来的日子，您将生活的更加幸福快乐。</p>
+        </div>
+        <!-- end -->
+        <{else}>
+		<div class="new_article">
+		<iframe name="iframe1" src="" frameborder="0" style="display:none" ></iframe>
+			<form action="./admin.php?m=Index&a=insert" enctype="multipart/form-data" target="_self" id="new_article" method="post">
+				<input type="hidden" id="article_group_id" name="article[group_id]" value="2">
+				<textarea style="resize: none;">分享我身边的真实囧事！</textarea>
+				
+				<div id="length"></div>
+			
+				<div class="picbox">
+					<label>真相:</label>
+					<input type="file" id="article_picture" name="pic">
+				</div>
+				
+				<div class="tagbox">
+					<label>标题：</label>
+					<input type="text" size="30" name="title" maxlength="30" id="qiushi_rtags">
+					<span>（最多30个字节）</span>
+				</div>
+				
+				<div class="tagbox">
+					<label>描述：</label>
+					<input type="text" size="30" name="desc" maxlength="30" id="qiushi_rtags">
+					<span>（最多50个字节）</span>
+				</div>
+			
+				<div class="tagbox">
+					<label>标签：</label>
+					<input type="text" size="30" name="tags" maxlength="30" id="qiushi_rtags">
+					<span>（最多3个标签，用空格分隔）</span>
+				</div>
+			
+				<div class="optionbox">
+					<label>选项:</label>
+
+					<!--评论开关-->
+					<input type="hidden" name="state" value="open">
+
+					<!--匿名投稿-->
+					<span style="display:none;">
+					<input name="article[anonymous]" type="checkbox" id="article_anonymous" onclick="this.value=this.checked?'1':'0'" value="0">
+					匿名投稿
+					</span>
+
+					<input type="checkbox" checked="checked">我已阅读并同意 <a href="#cp1">投稿须知</a>
+				</div>
+			
+				<div class="buttonbox">
+					<input type="submit" style="cursor:pointer" class="submit" id="article_submit" name="commit" value="发表">
+				</div>
+			</form>
+		</div>
+		
+		<div class="post-readme">
+			<a name="cp1"></a>
+			<h1>投稿须知</h1>
+			<ol>
+				<li>自己的或听说过的囧事，真实有笑点，不含政治、色情、广告、个人隐私、歧视等内容。</li>
+				<li>经过审核后发表。</li>
+				<li>转载请注明出处。</li>
+				<li>内容版权归囧老大网站所有。</li>
+			</ol>
+		</div>
+        <{/if}>
+        <!--end-->
+	</div>
+</div>
+    <div class="col2">
+
+    <!--登陆 start-->
+    <{include file= "../Public/login.html"}>
+    <!--登陆 end-->
+
+    <!--右侧 start-->
+    <{include file= "../Public/right.html"}>
+    <!--右侧 start-->
+    </div>
+</div>
+</div>
+
+<!--网站底部 start-->
+<{include file= "../Public/footer.html"}>
+<!--网站底部 end-->
+
+</body>
+</html>

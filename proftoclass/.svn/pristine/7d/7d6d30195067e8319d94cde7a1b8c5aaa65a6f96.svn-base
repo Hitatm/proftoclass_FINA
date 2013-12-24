@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>用户基本设置_绑定账号</title>
+    <meta name="keywords" content="#">
+    <meta name="description" content="#">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/user.css" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+    <{include file= "../Public/head_js.html"}>
+</head>
+<body style="background:#fff">
+
+<!--header start-->
+<{include file= "../Public/header.html"}>
+<div style="width:100%;height:25px"></div>
+<!--header end-->
+
+<div id="content">
+    <div class="layer layer-full">
+        <div class="tube">
+            <!-- block start -->
+            <div class="block">
+                <div class="box">
+                    <h2 class="line">
+                        <a href="__APP__?m=User&a=index&id=<{$user.id}>">个人中心</a>&nbsp;&gt;&nbsp;绑定账号
+                    </h2>
+                </div>
+                <!--会员中心菜单-->
+                <{include file= "../Public/user_head.html"}>
+                <div class="bind-desc mt8">
+                    把囧老大账号和其它社交网站（如新浪微博、人人、开心网等）绑定，轻松同步发布动态，与更多好友分享好东东。 <br>
+                    堆糖网通过第三方的安全接口绑定账号，为保证您的账户安全，同步发送任何信息之前，都会确认得到您的同意。
+                </div>
+
+                <dl class="bindsite lkl">
+                    <dd class="bds-th">
+                        <div class="prt1">是否绑定</div>
+                        <div class="prt2">同步说明</div>
+                    </dd>
+
+                    <dd>
+                        <div class="prt1"><div class="openbind openbind-sina">新浪微博</div>
+                        <div class="bds-bind"><b>已绑定</b>&nbsp;<a href="#">取消</a></div></div>
+                        <div class="prt2">
+                            <div class="bds-opt"><span>您已经绑定新浪微博账号，在收集或发布时可选择同步到您的新浪微博</span></div>
+                        </div>
+                    </dd>
+
+                    <dd>
+                        <div class="prt1"><div class="openbind openbind-qweibo">腾讯微博</div>
+                            <div class="bds-bind"><a href="#">绑定账号</a></div>
+                        </div>
+
+                        <div class="prt2">
+                            <div class="bds-opt"><span class="gray">您还未绑定QQ微博，请点击“绑定账号”进行绑定</span></div>
+                        </div>
+                    </dd>
+
+                    <dd>
+                        <div class="prt1"><div class="openbind openbind-qq">QQ</div>
+                            <div class="bds-bind"><b>已绑定</b>&nbsp;<a href="#">取消</a></div>
+                        </div>
+
+                        <div class="prt2">
+                            <div class="bds-opt"><span class="gray">您还未绑定QQ，请点击“绑定账号”进行绑定</span></div>
+                        </div>
+                    </dd>
+
+                    <dd>
+                        <div class="prt1"><div class="openbind openbind-douban">豆瓣</div>
+                            <div class="bds-bind"><a href="#">绑定账号</a></div>
+                        </div>
+
+                        <div class="prt2">
+                            <div class="bds-opt"><span class="gray">您还未绑定豆瓣，请点击“绑定账号”进行绑定</span></div>
+                        </div>
+                    </dd>
+
+                    <dd>
+                        <div class="prt1">
+                            <div class="openbind openbind-taobao">淘宝</div>
+                            <div class="bds-bind"><a href="#">绑定帐号</a></div>
+                        </div>
+
+                        <div class="prt2">
+                            <div class="bds-opt">
+                                <span class="gray">您还未绑定淘宝，请点击“绑定账号”进行绑定</span>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <!-- block end -->
+        </div>
+    </div>
+</div>
+
+<!--footer start-->
+<{include file= "../Public/foot.html"}>
+<!--footer end-->
+
+</body>
+</html>

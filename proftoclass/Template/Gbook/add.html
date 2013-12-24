@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>留言反馈</title>
+    <style type="text/css">
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 14px/1.6 "Helvetica",arial,sans-serif;
+        }
+
+        body a {
+            text-decoration: none !important;
+        }
+
+
+        a {
+            color: #0082cb;
+        }
+
+        button {
+            overflow: visible;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            border: 0 none;
+            outline: none;
+        }
+
+        #signup-form {
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            z-index: 1002;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+            display: none;
+        }
+
+        .login-form a.close, #suggest-form a.close, #report-form a.close, #face-form a.close {
+            display: block;
+            height: 45px;
+            width: 45px;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .login-form .close .bti, .suggest-form .close .bti, #report-form .close .bti, #face-form a.close .bti {
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+            background: url(__PUBLIC__/Home/images/web_icon.png) no-repeat -120px 0;
+            opacity: 0.55;
+            position: relative;
+            margin: 12px;
+        }
+
+        .login-form a.close, #suggest-form a.close, #report-form a.close, #face-form a.close {
+            display: block;
+            height: 45px;
+            width: 45px;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .login-form a.close, #face-form a.close {
+            margin: 0 0 0 495px;
+        }
+
+        .login-form .col1 {
+            float: left;
+            width: 400px;
+            height: 260px;
+            background: #fff;
+            padding: 25px;
+        }
+
+        #signup-form .col1 {
+            height: auto;
+        }
+
+        #message-form h1, .login-form h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 15px;
+        }
+
+        #signup-form .col1 .inputbox {
+            height: auto;
+        }
+
+        .login-form .col1 .inputbox label {
+            display: block;
+            line-height: 100%;
+            padding: 0 0 8px;
+        }
+
+        input[type=text], input[type=email], input[type=password] {
+            border: 1px solid #daceb7;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.05) inset,0 1px 0 #fff;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            line-height: 100%;
+        }
+
+        .login-form .col1 .inputbox input {
+            vertical-align: middle;
+            font-size: 18px;
+            width: 94%;
+            margin: 0 0 15px;
+            padding: 5px;
+        }
+
+        .simple_captcha div {
+            display: table;
+        }
+
+        .simple_captcha .simple_captcha_image {
+            border: 1px solid #ccc;
+            margin: 0px 0px 2px 0px !important;
+            padding: 0px !important;
+        }
+
+        .login-form .col1 .optionbox {
+            float: left;
+        }
+
+
+        .login-form .col1 button {
+            color: #646362;
+        }
+
+        #report-form button, #suggest-form button, #message-form button, .comments .login-block a, .comments #comment_submit, .login-form .col1 button {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #6a5c4c;
+            background: #f1ede3;
+            background: -moz-linear-gradient(top, #f7f3ee, #f1ede3);
+            background: -webkit-linear-gradient(top, #f7f3ee, #f1ede3);
+            border: 1px solid #c6baa2;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .login-form .col1 button {
+            width: 72px;
+            height: 38px;
+            line-height: 38px;
+            _height: 33px;
+            _line-height: 33px;
+        }
+
+
+
+        #message-form h1, .login-form h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 15px;
+        }
+
+        .intro2 a {
+            float: left;
+            margin: 5px 5px 0 0;
+        }
+
+        .login-form .col2 a.button {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFF;
+            background: #6ba1fa;
+            background: -moz-linear-gradient(top, #6ba1fa, #417bd8);
+            background: -webkit-linear-gradient(top, #6ba1fa, #417bd8);
+            border: 1px solid #417bd8;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="signup-form" class="login-form" style=" display: block;float: left;">
+        <a href="#" style="margin-left: 410px;margin-top: 6px;" class="close"><div class="bti"></div></a>
+        <div class="ie6-fix"></div>
+        <div class="col1">
+            <h1>请提供您的宝贵意见</h1>
+            <form accept-charset="UTF-8" action="__APP__/Gbook/insert/" class="new_user" id="new_user" method="post" novalidate="novalidate">
+                <div class="inputbox">
+                    <label>称呼</label>
+                    <input id="user_login" name="name" size="30" type="text">
+
+                    <label>邮箱</label>
+                    <input id="user_email" name="email" size="30" type="text">
+
+                    <label>网址</label>
+                    <input id="user_password" name="url" size="30" type="text">
+
+                    <label>内容</label>
+                    <textarea style="border: 1px solid #daceb7;box-shadow: 0 2px 1px rgba(0,0,0,0.05) inset,0 1px 0 #fff;border-radius: 4px;-webkit-appearance: none;" id="user_password_confirmation" rows="8" cols="53" name="content"></textarea>
+                </div>
+                 <div style="text-align: center;padding-top: 20px"><button type="submit" class="cancel">提交</button></div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

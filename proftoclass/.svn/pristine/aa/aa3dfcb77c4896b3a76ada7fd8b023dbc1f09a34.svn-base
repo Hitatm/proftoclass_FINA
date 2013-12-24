@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分组编辑 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function group(mode){
+	switch (mode){
+		case 'group':
+			$$.post('./admin.php?m='+mode+'&a=update', $('#form_detail').serialize(),function(){
+				$$.redirect('./admin.php?m=Group&a=index');
+			});
+			break;
+		default:
+            $$.alert({text:'无效参数 [ '+mode+' ]。'});
+            break;
+    }
+	
+	return false;
+}
+</script>
+</head>
+<body>
+
+<form id="form_detail" name="form_detail" method="post" action="###" onsubmit="return group('group');">
+<input type="hidden" name="id" value="<{$vo.id}>">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<!--
+	<tr>
+		<th>&nbsp;</th>
+		<td>无效参数[ ]。</td>
+	</tr>
+	-->
+	<tr>
+		<th>分组名称</th>
+		<td><input class="text" type="text" name="name" id="gr_name" value="<{$vo.name}>" /> <span><cite>*</cite> 必填</span></td>
+	</tr>
+	<tr>
+		<th>分组描述</th>
+		<td><textarea name="desc" id="gr_desc" cols="45" rows="5"><{$vo.desc}></textarea></td>
+	</tr>
+	<tr>
+		<th>分组权限</th>
+		<td>
+			<table id="rights_" class="rights" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th colspan="3"><span><a href="javascript:void(0);" onclick="var items = $('#rights_').find(':checkbox'); items.prop('checked', !items.prop('checked'));" onmouseover="$('#rights_').addClass('H');" onmouseout="$('#rights_').removeClass('H');">全选</a></span></th>
+				</tr>
+				<tr>
+					<td width="120"><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value="" /><label for=""></label></td>
+
+					<td width="120"><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value=""/><label for=""></label></td>
+					
+					
+					<!--<td width="120">&nbsp;</td>-->
+				
+					<td><input class="checkbox" type="checkbox" name="gr_rights[]" id="" value=""/><label for=""></label></td>
+					<!--<td>&nbsp;</td>-->
+				</tr>
+
+			</table>
+			<!--遍历结束-->
+		</td>
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="确认修改" /><input type="button" class="button cancle" value="放弃修改" onclick="$$.redirect('');" /></td></tr>
+
+</table>
+</form>
+</body>
+</html>

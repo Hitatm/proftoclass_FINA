@@ -1,0 +1,86 @@
+<?php
+class ContentAction extends BaseAction{
+	
+	//查看信息
+	public function content(){
+	
+	}
+ 
+	//添加信息
+	public function content_insert(){
+		
+	}
+	
+	//删除信息
+	public function content_del(){
+	
+	}
+	
+	//修改信息
+	public function content_update(){
+	
+	}
+	
+	//查看导航
+	public function navs(){
+	
+	}
+ 
+	//添加导航
+	public function navs_insert(){
+		
+	}
+	
+	//删除导航
+	public function navs_del(){
+	
+	}
+	
+	//修改导航
+	public function navs_update(){
+	
+	}
+	
+	//查看标签
+	public function tags(){
+	
+	}
+ 
+	//添加标签
+	public function tags_insert(){
+		
+	}
+	
+	//删除标签
+	public function tags_del(){
+	
+	}
+	
+	//修改标签
+	public function tags_update(){
+	
+	}
+	
+	//查看栏目
+	public function category(){
+	
+	}
+ 
+	//添加栏目
+	public function category_insert(){
+		
+	}
+	
+	//删除栏目
+	public function category_del(){
+	
+	}
+	
+	//修改栏目
+	public function category_update(){
+	
+	}
+	
+	
+}
+?>

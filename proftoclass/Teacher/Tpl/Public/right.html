@@ -1,0 +1,39 @@
+
+
+<!--标签 start-->
+<div class="tagsblock" style="float: left;">
+    <h3><{$var}>教授您好~</h3>
+ <h4> &nbsp;&nbsp;欢迎参加本学期的名师小班行活动</h4></br>
+<{foreach $hello as $vo}>
+<{if $vo.times!='0'}>
+        <p> 
+            &nbsp;&nbsp;<{$vo.grade}>级本学期次数:<{$vo.times}></br>
+            &nbsp;&nbsp;推荐时间  :</br>
+            <{if $vo.time1start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第一次：<{$vo.time1start}>-----<{$vo.time1end}>
+            <{/if}></br>
+            <{if $vo.time2start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第二次：<{$vo.time2start}>-----<{$vo.time2end}>
+            <{/if}></br>
+            <{if $vo.time3start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第三次：<{$vo.time3start}>-----<{$vo.time3end}>
+            <{/if}></br>
+            <{if $vo.time4start!=''}> 
+            &nbsp;&nbsp;&nbsp;&nbsp;第四次：<{$vo.time4start}>-----<{$vo.time4end}>
+            <{/if}></br> 
+        </p>
+<{/if}>
+<{/foreach}>
+
+
+</div>
+<!--标签 end-->
+
+<!--右侧底部 start-->
+<!-- <div id="box">
+    <div id="float" class="div1">
+        <div class="toolbar">
+            <a href="#" class="back">回到顶部</a><a href="javascript:void(0)" class="feedback">查看留言</a>
+        </div>
+    </div>
+</div> -->

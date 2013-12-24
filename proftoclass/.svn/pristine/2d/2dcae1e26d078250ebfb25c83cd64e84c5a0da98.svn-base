@@ -1,0 +1,36 @@
+<?php
+	class LoginAction extends BaseAction{
+		public function index(){
+			$this->display("index");
+		}
+		//执行登陆
+		public function login(){
+			$user = $_POST['username'];
+			$pass = md5($_POST['password']);
+			
+			$m=M("user");
+			$arr=$m->where("username='{$user}' and password='{$pass}' and state > 10")->find();
+			if($arr){
+				$_SESSION['userinfo']=$arr;
+				echo 'YES|'.$arr['us_id'];
+			}else{
+				echo "error";
+				$_SESSION['userinfo'] = false;
+			}
+		}
+		//退出登录
+		public function loginout(){
+			$_SESSION['userinfo']=false;
+		}
+		//加载登录状态
+		public function status(){
+			if($_SESSION['userinfo']){
+				echo '<img id="face" src="./uploads/user/735951354083439.png" title="#" />
+				<a class="homepage" href="#" target="_blank" title="访问首页"></a>
+				<a href="javascript:void(0);" class="loginout" title=""></a>';
+			}else{
+				echo '<img src="'.__ROOT__.'/Public/Admin/system/skins/error_no_rights.png" />游客...';
+			}
+		}
+    }
+?>

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预约名师</title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/user.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/tools/datepicker/WdatePicker.js"></script>
+<script type="text/javascript">
+/*function gbook(mode, args){
+	switch (mode){
+        case 'Gbook':
+            //confirm弹出提示框如果点击确定执行OK:function
+			$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+                //向服务器脚本发生GET请求，第一个参数是URL，第二个是回调函数
+				$$.get('./admin.php?m=Gbook&a=delete&id='+args, function(){$$.redirect();});
+			}});
+			break;
+
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+
+	return false;
+}*/
+</script>
+</head>
+<body>
+<{include file= "../Public/header.html"}>   
+       <div style="width:100%;height:25px"></div>
+<div id="content">
+    <div class="layer layer-full">
+        <div class="tube">
+            <!-- block start -->
+            <div class="block">
+                <div class="box">
+<form method="get" action="__APP__/Invite/find">
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th>
+             <!--使用了smarty模板标签-->
+            <label>教师姓名:</label>
+
+            <input type="text" class="text" name="name" id="search_key" size="30"  value="" /> <br> <br>
+
+      	</th>
+		<td align="right" class="simple"></td>
+	</tr>      <{$data}>
+	<tr>
+		<th>  <label>日期1:</label>
+            <input name="starttime" type="text" class="text date" style="width:100px;" onClick="WdatePicker()" value="" />---
+            <input name="stoptime" type="text" class="text date" style="width:100px;" onClick="WdatePicker()" value="" /><br> 
+
+         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   <button id="loginbtn" style="float:center" type="submit"><u>查询</u></button>
+          
+		</th>
+		<td align="right" class="simple"></td>
+	</tr>
+</table>
+</form>
+
+<{if $m}>
+<p> 
+
+
+	<!-- <{foreach $list as $m}>  --><p>
+                                   <{$m[name]}>教授本学期可预约时间为:</br>
+                                   '<{if $m[tim1]!=''}>' 推荐时间1: <{$m[tim1]}> <{/if}></br>
+                                   '<{if $m[tim2]!=''}>' 推荐时间2: <{$m[tim2]}> <{/if}></br>
+                                   '<{if $m[tim3]!=''}>' 推荐时间3: <{$m[tim3]}> <{/if}></br> 
+                                   <!--  <{/foreach}> --></p>" 
+<!-- <{foreach $list as $m}> -->
+        <!--  <{$m}>教授本学期可预约时间为:</br>
+         <{if $m.tim1!=''}> 推荐时间1: <{$m[tim1]}> <{/if}></br>
+         <{if $m.tim2!=''}> 推荐时间2: <{$m[tim2]}> <{/if}></br>
+         <{if $m.tim3!=''}> 推荐时间3: <{$m[tim3]}> <{/if}></br>  -->
+<!-- <{/foreach}> -->
+       <!--   <{$m.teachername}>教授本学期可预约时间为:</br>
+         <{if $m.tim1!=''}> 推荐时间1: <{$m[tim1]}> <{/if}></br>
+         <{if $m.tim2!=''}> 推荐时间2: <{$m[tim2]}> <{/if}></br>
+         <{if $m.tim3!=''}> 推荐时间3: <{$m[tim3]}> <{/if}></br>  -->
+
+
+
+      <!--    <table border="1" width="700" align='center'>
+				<tr>
+
+				<tr/>
+				<volist name='data' id='vo'>
+				  <tr>
+					  <td> <{$vo.teachername}></td>	
+					 <td> <{$vo.tim1}></td>
+					 <td> <{$vo.tim2}></td>
+					 <td> <{$vo.tim3}></td>
+					
+				  </tr>
+				  </volist>		  
+			</table> 	 -->
+</p>
+
+<{/if}>
+</body>
+</html>
+
+<!-- 
+<form method="get" action="###" onsubmit="$$.redirect('./admin.php?m=Gbook&a=index&'+$(this).serialize());return false;">
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th>
+             <!--使用了smarty模板标签-->
+         <!--    <input type="text" class="text" name="keyword" id="search_key" size="20" value="<{$Think.request.keyword}>" />
+            <input name="starttime" type="text" class="text date" style="width:80px;" onClick="WdatePicker()" value="" />-<input name="stoptime" type="text" class="text date" style="width:80px;" onClick="WdatePicker()" value="" />
+            <input type="submit" value="筛选" class="button" />
+			<input type="button" value="重置" class="button" onclick="$$.redirect('');" />
+
+
+		</th>
+		<td align="right" class="simple"></td>
+	</tr>
+</table>
+</form> -->
+
+
+
+
+
+

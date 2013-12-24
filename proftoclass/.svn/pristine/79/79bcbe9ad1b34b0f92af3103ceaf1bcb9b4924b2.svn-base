@@ -1,0 +1,27 @@
+<?php 
+class ModelsAction extends BaseAction{
+
+	public function index(){
+        $m=M("Models");
+        $list=$m->select();
+        $this->assign("list",$list);
+        $this->display("index");
+	}
+
+    public function off(){
+        $m=M("Models");
+        $data["state"]=1;
+        if($m->where("id=".$_GET["id"])->save($data)){
+            echo "YES";
+        }
+    }
+
+    public function on(){
+        $m=M("Models");
+        $data["id"]=$_GET["id"];
+        $data["state"]=0;
+        if($m->where("id=".$_GET["id"])->save($data)){
+            echo "YES";
+        }
+    }
+}

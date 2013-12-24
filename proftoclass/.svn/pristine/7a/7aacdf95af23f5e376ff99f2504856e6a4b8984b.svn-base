@@ -1,0 +1,9 @@
+<?php
+class CacheAction extends BaseAction{
+	//搜索方法(_filter是公共类中的方法)
+	public function _filter(&$map){
+		if(isset($_GET["by"]) && isset($_GET["key"])){
+			$map[$_GET["by"]]=array('like',"%{$_GET['key']}%");
+		}
+	}
+}

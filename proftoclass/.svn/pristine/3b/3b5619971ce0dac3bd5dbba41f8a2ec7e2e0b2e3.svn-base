@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看内容 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function content(mode, args){
+	switch (mode){
+		case 'content.delete':
+		case 'content.check_1':
+		case 'content.check_0':
+		case 'content.fixed_1':
+		case 'content.fixed_0':
+			args = args || $$.selectval('#table_list :checked:enabled[name=select]');
+			if (args == ''){
+				$$.alert({text:'请选择记录。'});
+				return false;
+			}
+			if (mode == 'content.delete'){
+				$$.confirm({text:'确定删除[ #'+args+' ]？', ok:function(){
+					$$.get('./admin.php?m=Content&a=delete&id=' + args, function(){$$.redirect();});
+				}});	
+			}else{
+				$$.get('?mode=content.check&save='+ mode +'&args=' + args, function(){$$.redirect();});
+			}
+			break;
+
+		default:
+			$$.alert({text:'请选择操作。'});
+	}
+	
+	return false;
+}
+$(function(){
+	$('.table_list tr').hover(function(){
+		$(this).find('.operate').show();	
+	},function(){
+		$(this).find('.operate').hide();
+	});
+});
+</script>
+</head>
+<body>
+<form method="get" action="###" onsubmit="$$.redirect('url&'+$(this).serialize());return false;">
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th>
+		<select class="bnt"><option value="">批量操作</option>
+            <option value="content.delete">删除</option>
+            <option value="content.check_0">草稿</option>
+            <option value="content.check_1">发布</option>
+            <option value="content.fixed_1">置顶</option>
+            <option value="content.fixed_0">取消置顶</option>
+        </select>
+        <input type="button" value="应用" class="button" onclick="content($(this).parent().find('.bnt').val());" />
+		<select name="type">
+        	<option value="0">全部分类</option>
+        </select>
+        <input type="text" class="text" name="keyw" id="search_key" size="20" value="" />
+        <input type="submit" value="筛选" class="button" />
+		<input type="button" value="重置" class="button" onclick="$$.redirect('url&cate=&stat=&keyw=&page=1');" />
+		</th>
+		<td align="right" class="simple"></td>
+	</tr>
+</table>
+</form>
+
+<table id="table_list" class="table_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th>标题</th>
+		<th>标签</th>
+		<th width="21%">所属分类</th>
+		<th width="21%">状态</th>
+		<th width="17%">添加时间</th>
+		
+	</tr>	
+		<{foreach $list as $vo}>
+	<tr>
+	
+		<td><input type="checkbox" class="checkbox" name="select" id="select_" value="" onchange="var _this = $(this); _this.prop('checked') ? _this.parent().parent().addClass('S') : _this.parent().parent().removeClass('S');" /></td>
+		<td><{$vo.id}></td>
+		<td>
+			<a class="update" href=""><{$vo.title}></a>
+			<div class="operate">
+				<a class="update" href="./admin.php?m=content&a=edit&id=<{$vo.id}>">修改</a><span>|</span>
+				<a class="delete" href="javascript:void(0);" onclick="content('content.delete','<{$vo.id}>');">删除</a>
+			</div>
+		</td>
+			<td><{$vo.tags}></td>
+			<td><{$vo.cid}></td>
+			<td><{$vo.state}></td>
+			<td><{$vo.addtime}></td>
+	</tr>
+	<{/foreach}>
+	<!--
+	<tr>
+		<td colspan="6" align="center">暂无记录。</td>
+	</tr>
+	-->
+    <tr id="list_caption">
+		<th width="4%"><input type="checkbox" class="checkbox" id="selectall" onchange="$('#table_list :checkbox:enabled[name=select]').prop('checked', !$(this).prop('checked')).click();" /></th>
+		<th width="6%">#</th>
+		<th>标题</th>
+		<th>标签</th>
+		<th width="21%">所属分类</th>
+		<th width="21%">作者</th>
+		<th width="17%">添加时间</th>
+	</tr>
+</table>
+
+<table class="table_tools" width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="right">
+			<div class="turnner" id="turnner">
+			  <{$page}>
+			</div>
+		
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

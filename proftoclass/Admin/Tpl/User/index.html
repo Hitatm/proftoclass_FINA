@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>名师小班行</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<link rel="stylesheet" href='__PUBLIC__/Home/css/style_web.css' type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/tbox.js"></script>
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离 
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','top':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'top':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+
+	TB_box(".tbox","TB_window","__APP__?m=Login&a=res&height=460;width=550");
+	TB_box(".feedback","TB_window","__APP__?m=gbook&a=add&height=500;width=450");
+});
+//执行登陆
+function login(){
+
+	$.post('__APP__/Login/dologin/',$('#dologin').serialize(),function(data){
+            if(data=="ERR"){
+                alert("用户名或是密码错误！");
+            }else{
+                $(".dologin").html(data);
+            }
+		}
+	);
+	
+	return false;
+}
+
+function myup(res,id){
+	$.ajax({
+		type:"GET",
+		url:"__APP__/Index/doup/up/"+res+"/id/"+id,
+		success:function(msg){
+            if(msg=="login"){
+                alert("请先进行登录！");
+            }else if(msg=="ERR"){
+                alert("您已经发表过意见了");
+            }else{
+			    document.getElementById(res).innerHTML=msg;
+            }
+		}
+	});
+}
+
+function comments(id){
+	$("#comments_"+id).toggle(600);
+}
+
+function myfunc(id){
+	$.ajax({
+		type:'POST',
+		url:"__APP__/Index/talk",
+		data:$('#textcontent_'+id).serialize(),
+		dataType:'json',
+		success:function(msg){
+            $("#c_con_"+msg.tid).append('<div class="discuss1"><div style="width: 30px;height: 30px;float:left"><img style="width:30px;height:30px;" src="__ROOT__'+msg.pic+'"></div><div class="c_content">'+msg.content+'<span>'+msg.num+'</span></div></div>')
+            $(".discuss").val("在来说两句...");
+		}
+	})
+	
+	return false;
+}
+</script>
+<style>
+
+</style>
+</head>
+<body>
+<{include file= "../Public/header.html"}>
+<!--网站主体 start-->
+<div class="main">
+<div class="content-block">
+<div class="col1">
+    <!--遍历首页文章 start-->
+    <{foreach $list as $vo}>
+    <div class="maa">
+        <a target="_blank" title="<{$vo.photo}>" href="#" class="blog-avatar"><img src="__ROOT__/<{$vo.photo}>" style="width:64px;height:64px;"></a>
+    </div>
+	<div class="content_left" style="position: relative;">
+		<div class="pop-triangle"></div>
+		<div class="feed-container-top"></div>
+		
+		<div class="block untagged" id='#'>
+			<div class="detail1">
+				<a href="#" title="#" target="_blank"></a>
+			</div>
+			
+			<div class="author">
+				<a href="#" title="#" style="color:#ccc" target="_blank"><{$vo.author}></a>
+			</div>
+			<!--标题可以不填-->
+			<div class="tags">
+				<a href="#" style="font-size:24px"><{$vo.title}></a>
+			</div>
+	
+			<div class="content" title="#">
+				<div style="text-align:left;">
+				<{$vo.content}>	
+				</div>
+				<{if $vo.pic!=''}>
+                <img src='__ROOT__<{$vo.pic}>' />
+				<{/if}>
+			</div>
+			<div class="bar clearfix" id="#">
+				<div class="dcf">
+					<div class="podigg">
+						<div class='up' onclick="myup('up_<{$vo.id}>',<{$vo.id}>)">
+							<a href="javascript:void(0)">顶&nbsp;&nbsp;<span id="up_<{$vo.id}>"><{$vo.up}></span></a>
+						</div>
+						<div class='down' onclick="myup('down_<{$vo.id}>',<{$vo.id}>)">
+							<a href="javascript:void(0)">踩&nbsp;&nbsp;<span id="down_<{$vo.id}>"><{$vo.down}></span></a>
+						</div>
+					</div>
+					<div class="comment">
+						<a href="javascript:comments(<{$vo.id}>)"  title="评论" class="qiushi_comments">评论</a>
+					</div>
+					<div class="detail">
+						<a title="分享"></a>
+					</div>
+				</div>
+				<div id="comments_<{$vo.id}>" class="c_c" style="display:none">
+					
+					<div id="c_con_<{$vo.id}>">
+						<{foreach $vo.comments as $c}>
+							<div class="discuss1">
+								<div style="width: 30px;height: 30px;float:left"> <img style="width:30px;height:30px;" src="__ROOT__<{$c.pic}>" alt="<{$c.name}>" /></div>
+								<div class="c_content"><span style="text-algin:right"><{$c.num}></span><{$c.content}></div>
+							</div>
+						<{/foreach}>
+					</div>
+					
+					<form method="post" name="myform" action="" onsubmit="return myfunc(<{$vo.id}>)" id="textcontent_<{$vo.id}>">
+					<input type="hidden" name="tid" value="<{$vo.id}>"/>
+					<input type="hidden" name="uid" class="cuid" value="<{$smarty.session.user.id}>"/>
+					<input type="hidden" name="name" class="cuname" value="<{$smarty.session.user.name}>"/>
+					<!--为评论添加一个隐藏域，传user中的图片-->
+					<input type="hidden" name="pic" class="cupic" value="<{$smarty.session.user.pic}>">
+					<textarea name="content" class="discuss">我来说两句...</textarea>
+					<button type="submit" class="sx_enter" onclick="if($('.cuid').val()==''){alert('请先进行登陆！');return false;}">发送</button>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		<div class="feed-container-bottom"></div>
+	</div>
+    <div class="c_bottom"></div>
+    <{/foreach}>
+    <!--遍历首页文章 end-->
+    <div class="turnner" style="text-align: center;"><{$pages}></div>
+</div>
+    <div class="col2">
+<div class ="login_box">
+    <div class="login_right">
+      <a class="login_link" href="__ROOT__/admin.php" target="_blank" id="go">&nbsp;&nbsp;&nbsp;&nbsp;管理员入口&nbsp;&nbsp;&nbsp;&nbsp;</a>   
+      <a class="login_link" href="__ROOT__/teacher.php" target="_blank" id="go">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;教师入口&nbsp;&nbsp;&nbsp;&nbsp;</a>   
+
+    </div>
+</div>
+        <!--登陆 start-->
+
+        <{include file= "../Public/login.html"}>
+        <!--登陆 end-->
+
+  <!--  <button id="loginbtn" style="margin-left: 27px;*+margin-left: 40px;" type class="tbox"><u><a href="__ROOT__/admin.php">后台<a></u></button> -->
+        <!--右侧 start-->
+        <{include file= "../Public/right.html"}>
+        <!--右侧 start-->
+    </div>
+</div>
+<!--网站底部 start-->
+<{include file= "../Public/footer.html"}>
+<!--网站底部 end-->
+<div id="TB_window"></div>
+</body>
+</html>

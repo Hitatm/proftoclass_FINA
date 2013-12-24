@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网站主题 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$default}>/default/skins/style.css" />
+<script type="text/javascript" src="<{$default}>/default/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$default}>/default/js/system.js"></script>
+<script type="text/javascript" src="<{$default}>/default/js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function themeActive(dir){
+	$$.get('?mode=config.theme&args='+dir);
+}
+</script>
+</head>
+<body style="padding:0;">
+	<div class="tabs">
+		<div></div>
+		<a href="#" class="C">网站主题</a>
+		<a href="#">控制台皮肤</a>
+	</div>
+	<div class="skins" id="skins">
+
+		<a href="#" onclick="$('#skins a').removeClass('C'); this.className='C'; themeActive('');return false;" class="C" title="点击应用皮肤">
+			<cite></cite>
+			<dl>
+				<dt>
+					<img src="/images/thumb.jpg" width="160" height="100" />
+				</dt>
+				<dd class="T">&nbsp; &nbsp;</dd>
+				<dd><span>作者：</span>&nbsp; &nbsp; <span>更新时间：</span></dd>
+				<dd><span>邮件地址：</span></dd>
+				<dd><span>官方支持：</span></dd>
+			</dl>
+		</a>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<{if <{$AdminId}>}>
+	<img id="face" src="./uploads/user/735951354083439.png" title="admin" />
+	<a class="homepage" href="#" target="_blank" title="访问首页"></a>
+	<a href="javascript:void(0);" class="loginout" title=""></a>
+	<{else}>
+		<img src="<{$AdminTpl}>skins/error_no_rights.png" />游客...
+<{/if}>

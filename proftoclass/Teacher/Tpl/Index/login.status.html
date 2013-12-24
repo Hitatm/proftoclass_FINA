@@ -1,0 +1,9 @@
+<php>
+    if($_SESSION['userinfo'] !=false){
+        echo '<img id="face" src="./uploads/user/735951354083439.png" title="admin" />
+        <a class="homepage" href="'.__ROOT__.'/index.php" target="_blank" title="访问首页"></a>
+        <a href="javascript:void(0);" class="loginout" title=""></a>';
+    }else{
+		echo '<img src="./Public/Admin/system/skins/error_no_rights.png" />游客...';
+    }
+</php>

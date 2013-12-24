@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户添加 - <{$mytitle}></title>
+<meta name="robots" content="nofollow">
+<link rel="stylesheet" type="text/css" href="<{$AdminTpl}>skins/style.css" />
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/system.js"></script>
+<script type="text/javascript" src="<{$AdminTpl}>js/jquery.ui.min.js"></script>
+<script type="text/javascript">
+function user(mode,args){
+	switch (mode){
+		case 'User':
+			$$.post('./admin.php?m='+mode+'&a=insert', $('#form_detail').serialize(), function(){
+				top.naviSwitcher('user/add','user/select');
+			});
+			break;
+		default:
+			$$.alert({text:'无效参数 [ '+mode+' ]。'});
+			break;
+	}
+	
+	return false;
+}
+
+function headerUploadCallback(param){
+	$('#thumb_img').html('<a href="'+param.url+'" target="_blank"><img src="'+param.url+'" /></a>');
+	$('#us_face').val(param.dir+param.name);
+	$$.filesUploadLayer.close();
+}
+
+function headerClear(){
+	$('#thumb_img').html('');
+	$('#us_face').val('');
+}
+</script>
+</head>
+<body>
+
+<form id="form_detail" name="form_detail" method="post" action="###" enctype="multipart/form-data" onsubmit="return user('User');">
+<table class="table_form" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>所属分组</th>
+		<td>
+        <select name="gid">
+        	<option>=选择用户组=</option>
+        	<!--遍历用户组-->
+			<{foreach $glist as $vo}>
+				<option value="<{$vo.id}>" <{if $vo.id == $vo.gid}> selected <{/if}>>
+					 <{$vo.name}>
+				</option>
+			<{/foreach}>
+        </select>
+		
+		<span><cite>*</cite> 必填</span>
+		</td>
+	</tr>
+    <tr>
+		<th>头　像asdfc</th>
+		<td>
+			<div class="thumb">
+            	<div class="thumb_img" id="thumb_img"></div>
+                <h1><a href="#" onclick="$$.filesUploadLayer.open({dir:'User',url:'./admin.php?m=Files&a=files_upload',callback:'headerUploadCallback',opener:window});return false;">设置头像</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="headerClear();return false;">清除</a></h1>
+            </div>
+            <input type="hidden" name="pic" id="us_face">
+		</td>
+	</tr>
+	<tr>
+		<th>登录帐户</th>
+		<td>
+			<input class="text" type="text" name="username" id="us_username" autocomplete="off" /> <span><cite>*</cite> 必填</span>
+			<script type="text/javascript">$(function(){setTimeout(function(){$('#us_username').val('');},200)});</script>
+		</td>
+	</tr>
+	<tr>
+		<th>登录密码</th>
+		<td>
+			<input class="text" type="password" name="password" id="us_password" autocomplete="off" /> <span><cite>*</cite> 必填</span>
+			<script type="text/javascript">$(function(){setTimeout(function(){$('#us_password').val('');},200)});</script>
+		</td>
+	</tr>
+	<tr>
+		<th>用户姓名</th>
+		<td><input class="text" type="text" name="name" id="us_name" /> <span><cite>*</cite> 必填</span></td>
+	</tr>
+	<tr>
+		<th>描　述</th>
+		<td><input class="text" type="text" name="desc" id="us_name" /></td>
+	</tr>
+	<tr>
+		<th>邮件地址</th>
+		<td><input class="text" type="text" name="email" id="us_email" /></td>
+	</tr>
+	<tr class="action"><th>&nbsp;</th><td><input type="submit" class="button" value="确认添加" /><input type="button" class="button cancle" value="放弃添加" onclick="$$.confirm({text:'放弃添加并关闭窗口？', ok:function(){top.naviShut('member/user.insert');}, icon:'WAR'});" /></td></tr>
+</table>
+</form>
+
+</body>
+</html>

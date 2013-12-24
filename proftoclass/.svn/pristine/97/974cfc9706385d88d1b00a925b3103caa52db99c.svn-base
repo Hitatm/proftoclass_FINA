@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>用户基本设置_邮件订阅</title>
+    <meta name="keywords" content="#">
+    <meta name="description" content="#">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/user.css" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+    <{include file= "../Public/head_js.html"}>
+</head>
+<body style="background:#fff">
+<!--header start-->
+<{include file= "../Public/header.html"}>
+<div style="width:100%;height:25px"></div>
+<!--header end-->
+<div id="content">
+    <div class="layer layer-full">
+        <div class="tube">
+            <!-- block start -->
+            <div class="block">
+                <div class="box">
+                    <h2 class="line">
+                        <a href="__APP__?m=User&a=index&id=<{$user.id}>">个人中心</a>&nbsp;&gt;&nbsp;邮件订阅
+                    </h2>
+                </div>
+                <!--会员中心菜单-->
+                <{include file= "../Public/user_head.html"}>
+
+                <form method="post" action="">
+                    <div class="set-baseinfo">
+                        <div class="clr u-chk">
+                            <input id="gender-0" class="chk mr8" type="radio" name="enable" value="true" checked=""><label for="gender-0">接收来自囧老大精选推荐，不定期发送</label>
+                        </div>
+                        <div class="clr u-chk">
+                            <input id="gender-1" class="chk mr8" type="radio" name="enable" value="false"><label for="gender-1">不订阅读囧老大每周精华推荐</label></div>
+
+                        <div class="clr mt8"><a class="abtn abtn-w4" target="_self" href="javascript:;">
+                            <button type="submit"><u>保存设置</u></button></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- block end -->
+        </div>
+    </div>
+</div>
+<!--footer start-->
+<{include file= "../Public/foot.html"}>
+<!--footer end-->
+</body>
+</html>

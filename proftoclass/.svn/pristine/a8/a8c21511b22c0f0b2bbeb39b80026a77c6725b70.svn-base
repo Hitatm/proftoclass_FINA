@@ -1,0 +1,6 @@
+<?php
+class FilesAction extends BaseAction{
+	public function index(){
+		$this->display("files_upload");
+	}
+}

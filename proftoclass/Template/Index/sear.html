@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>名师小班行</title>
+<meta name="keywords" content="#"/>
+<meta name="description" content="#"/>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<link rel="stylesheet" href='__PUBLIC__/Home/css/style_web.css' type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Home/css/css.css" type="text/css"  />
+<script type="text/javascript" src="__PUBLIC__/Admin/system/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/tbox.js"></script>
+<script type="text/javascript">
+$(function(){ 
+	//导航距离屏幕顶部距离 
+	var _defautlTop = $("#header").offset().top - $(window).scrollTop(); 
+	//导航距离屏幕左侧距离 
+	var _defautlLeft = $("#header").offset().left - $(window).scrollLeft(); 
+	//导航默认样式记录，还原初始样式时候需要 
+	var _position = $("#header").css('position'); 
+	var _top = $("#header").css('top'); 
+	var _left = $("#header").css('left'); 
+	var _zIndex = $("#header").css('z-index'); 
+	//鼠标滚动事件 
+	$(window).scroll(function(){ 
+		if($(this).scrollTop() > _defautlTop){ 
+			//IE6不认识position:fixed
+			if($.browser.msie && $.browser.version=="6.0"){ 
+				$("#top").css({'position':'absolute','top':eval(document.documentElement.scrollTop),'left':_defautlLeft,'z-index':99999}); 
+				//防止出现抖动 
+				$("html,body").css({'background-image':'url(about:blank)','background-attachment':'fixed'}); 
+			}else{ 
+				$("#header").css({'position':'fixed','top':0,'left':_defautlLeft,'z-index':99999}); 
+			} 
+		}else{ 
+			$("#header").css({'position':_position,'top':_top,'left':_left,'z-index':_zIndex}); 
+		} 
+	}); 
+
+	TB_box(".tbox","TB_window","__APP__?m=Login&a=res&height=460;width=550");
+	TB_box(".feedback","TB_window","__APP__?m=gbook&a=add&height=500;width=450");
+});
+//执行登陆
+function login(){
+
+	$.post('__APP__/Login/dologin/',$('#dologin').serialize(),function(data){
+            if(data=="ERR"){
+                alert("用户名或是密码错误！");
+            }else{
+                $(".dologin").html(data);
+            }
+		}
+	);
+	
+	return false;
+}
+
+function myup(res,id){
+	$.ajax({
+		type:"GET",
+		url:"__APP__/Index/doup/up/"+res+"/id/"+id,
+		success:function(msg){
+			document.getElementById(res).innerHTML=msg;
+		}
+	});
+}
+function comments(id){
+		
+	$("#comments_"+id).toggle(600);
+}
+
+function myfunc(id){
+	$.ajax({
+		'type':'POST',
+		'url':"__APP__/Index/talk",
+		'data':$('#textcontent_'+id).serialize(),
+		'dataType':'json',
+		'success':function(msg){
+			$("#c_con_"+msg.tid).append('<div class="discuss1"><div style="width: 30px;height: 30px;float:left"><img style="width:30px;height:30px;" src="__ROOT__'+msg.pic+'"></div><div class="c_content">'+msg.content+'<span>'+msg.num+'</span></div></div>');
+		
+		}
+	})
+	
+	return false;
+}
+</script>
+<style>
+.untagged_1{
+	background: url('./Public/Home/images/feed-bg-sprites.$5106.png') -1200px 0 repeat-y;
+	padding: 12px 20px;
+	width: 504px;
+	text-align:center;
+	}
+</style>
+</head>
+<body>
+<{include file= "../Public/header.html"}>
+<!--网站主体 start-->
+<div class="main">
+<div class="content-block">
+<div class="col1">
+<!--=================================================-->
+<div class="content_left" style="position: relative;padding-left:85px;float:left;margin-bottom:15px;">
+		<div class="feed-container-top"></div>
+		<div class="untagged_1" id="#">共计查找到<font color="red">&nbsp;&nbsp;<{$smarty.get.kw}>&nbsp;&nbsp;</font>的<{$num}>条相关记录</div>
+		<div class="feed-container-bottom"></div>
+</div>
+<!--=================================================-->
+    <!--遍历首页文章 start-->
+    <{foreach $list as $vo}>
+    <div class="maa">
+        <a target="_blank" title="<{$user.photo}>" href="#" class="blog-avatar"><img src="__ROOT__<{$vo.photo}>" style="width:64px;height:64px;"></a>
+    </div>
+	<div class="content_left" style="position: relative;">
+		<div class="pop-triangle"></div>
+		<div class="feed-container-top"></div>
+		
+		<div class="block untagged" id='#'>
+			<div class="detail1">
+				<a href="#" title="#" target="_blank"></a>
+			</div>
+			
+			<div class="author">
+				<a href="#" title="#" style="color:#ccc" target="_blank">作者</a>
+			</div>
+			<!--标题可以不填-->
+			<div class="title">
+				<a href="#" style="font-size:24px"><{$vo.title}></a>
+			</div>
+	
+			<div class="content" title="<{$vo.desc}>">
+				<div style="text-align:left;">
+				<{$vo.content}>	
+				</div>
+				<{if $vo.pic!=''}>
+                <img src='__ROOT__<{$vo.pic}>' />
+				<{/if}>
+			</div>
+			
+		</div>
+		<div class="feed-container-bottom"></div>
+	</div>
+    <div class="c_bottom"></div>
+    <{/foreach}>
+    <!--遍历首页文章 end-->
+    <div class="turnner" style="text-align: center;"><{$pages}></div>
+</div>
+    <div class="col2">
+        <!--登陆 start-->
+        <{include file= "../Public/login.html"}>
+        <!--登陆 end-->
+
+        <!--右侧 start-->
+        <{include file= "../Public/right.html"}>
+        <!--右侧 start-->
+    </div>
+</div>
+<!--网站底部 start-->
+<{include file= "../Public/footer.html"}>
+<!--网站底部 end-->
+<div id="TB_window"></div>
+</body>
+</html>
